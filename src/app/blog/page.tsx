@@ -3,7 +3,7 @@ import { blogPosts } from "../../content/blog";
 
 export default function BlogPage() {
   return (
-    <main className="page-shell">
+    <main className="page-shell motion-shell">
       <section className="space-y-4">
         <span className="pill">Blog</span>
         <h1 className="section-title text-4xl sm:text-5xl">Writing and Notes</h1>
@@ -19,7 +19,7 @@ export default function BlogPage() {
               {post.date} · {post.readTime}
             </p>
             <h2 className="text-xl font-semibold text-zinc-900">
-              <Link href={`/blog/post?slug=${post.slug}`} className="transition hover:text-zinc-700 hover:underline">
+              <Link href={`/blog/${post.slug}`} className="transition hover:text-zinc-700 hover:underline">
                 {post.title}
               </Link>
             </h2>
@@ -31,7 +31,7 @@ export default function BlogPage() {
                 </span>
               ))}
             </div>
-            <Link href={`/blog/post?slug=${post.slug}`} className="inline-block text-sm font-medium text-blue-700 hover:underline">
+            <Link href={`/blog/${post.slug}`} className="inline-block text-sm font-medium text-blue-700 hover:underline">
               Read article
             </Link>
           </article>

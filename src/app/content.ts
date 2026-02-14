@@ -109,7 +109,7 @@ const enHomeContent: HomeContent = {
       posts: [
         {
           title: "Portfolio Engineering Log: Current Technical Snapshot",
-          href: "/blog/post?slug=portfolio-development-log",
+          href: "/blog/portfolio-development-log",
           publishedAt: "2026-02-14",
           summary: "Architecture, stack decisions, shipped functionality, and open engineering tasks from the current codebase.",
         },

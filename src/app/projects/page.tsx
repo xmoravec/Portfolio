@@ -46,7 +46,7 @@ const codeSpotlight = `export function summarizeOutcome(inputs: string[]) {
 
 export default function ProjectsPage() {
   return (
-    <main className="page-shell">
+    <main className="page-shell motion-shell">
       <section className="space-y-4">
         <span className="pill">Projects</span>
         <h1 className="section-title text-4xl sm:text-5xl">Selected Work</h1>

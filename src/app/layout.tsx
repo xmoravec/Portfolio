@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Erik Moravec",
   description:
     "Personal website with projects, writing, and current focus.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 
 const navItems = [

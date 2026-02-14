@@ -6,7 +6,7 @@ export default function Home() {
   const content = getHomeContent(defaultLocale);
 
   return (
-    <main className="page-shell">
+    <main className="page-shell motion-shell">
       <section className="flex flex-col gap-6" aria-labelledby="hero-heading">
         <span className="pill w-fit">{content.hero.eyebrow}</span>
         <h1
