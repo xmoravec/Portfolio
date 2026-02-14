@@ -22,7 +22,7 @@ body {
 
 @layer components {
   .page-shell {
-    @apply mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-14 px-6 py-12 sm:px-10 xl:max-w-7xl;
+    @apply mx-auto flex min-h-screen w-full max-w-none flex-col gap-10 px-4 py-8 sm:gap-14 sm:px-6 sm:py-12 md:max-w-6xl md:px-10 xl:max-w-7xl;
   }
 
   .section-card {
@@ -50,7 +50,7 @@ body {
   }
 
   .horizontal-scroll {
-    @apply -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2;
+    @apply -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 [touch-action:pan-x];
   }
 
   .horizontal-scroll::-webkit-scrollbar {

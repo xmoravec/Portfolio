@@ -50,14 +50,14 @@ This codebase is in the "polish and production wiring" phase: core routes are im
 	- too-fast submit timing guard
 	- suspicious short-link heuristic
 - Email delivery is prepared through Resend API
-- If mail envs are missing, the flow degrades safely to queued/not-configured behavior
+- If `RESEND_API_KEY` is missing, the flow degrades safely to queued/not-configured behavior
 
 ## Environment Variables
 
 - `NEXT_PUBLIC_SITE_URL` — canonical metadata base URL
 - `RESEND_API_KEY` — Resend authentication key
-- `CONTACT_TO_EMAIL` — destination inbox for contact submissions
-- `CONTACT_FROM_EMAIL` — optional sender identity override
+
+Contact sender and recipient values are currently configured in `src/app/contact/config.ts`.
 
 ## Deployment Direction
 
@@ -71,11 +71,6 @@ Production readiness depends mainly on environment configuration, domain wiring,
 ## Roadmap
 
 ### Short term
-
-- **Wire email with Resend end-to-end**
-	- Finalize verified sending domain and sender identity for production-safe deliverability.
-	- Confirm `CONTACT_TO_EMAIL` / `CONTACT_FROM_EMAIL` routing behavior in Vercel envs.
-	- Add one real-world submit test path (success + fallback + failure messaging).
 
 - **Mobile UI pass**
 	- Audit all pages for spacing, typography scale, sticky header behavior, and tap targets on smaller breakpoints.

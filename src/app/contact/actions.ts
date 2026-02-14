@@ -1,9 +1,19 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { contactMailConfig } from "./config";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const URL_PATTERN = /(https?:\/\/|www\.)/i;
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
 function toSafeText(value: FormDataEntryValue | null) {
   if (typeof value !== "string") {
@@ -18,12 +28,50 @@ async function sendWithResend(options: {
   message: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL;
-  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "Portfolio Contact <onboarding@resend.dev>";
 
-  if (!apiKey || !toEmail) {
+  if (!apiKey) {
     return "not_configured" as const;
   }
+
+  const escapedName = escapeHtml(options.name);
+  const escapedEmail = escapeHtml(options.email);
+  const escapedMessage = escapeHtml(options.message).replaceAll("\n", "<br />");
+  const submittedAt = new Date().toISOString();
+
+  const html = `
+    <div style="background:#f8fafc;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#0f172a;">
+      <div style="max-width:680px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+        <div style="background:#0f172a;color:#ffffff;padding:16px 20px;">
+          <h1 style="margin:0;font-size:18px;line-height:1.3;">New website contact submission</h1>
+          <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:#cbd5e1;">You were contacted through your personal website contact form.</p>
+        </div>
+        <div style="padding:20px;">
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:#334155;">A new inquiry has been received and is ready for follow-up.</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">
+            <tbody>
+              <tr>
+                <td style="width:180px;padding:10px 12px;border:1px solid #e2e8f0;background:#f8fafc;font-weight:600;color:#0f172a;">From Name</td>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;color:#1e293b;">${escapedName}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;background:#f8fafc;font-weight:600;color:#0f172a;">From Email</td>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;color:#1e293b;">${escapedEmail}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;background:#f8fafc;font-weight:600;color:#0f172a;">Submitted At (UTC)</td>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;color:#1e293b;">${submittedAt}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;background:#f8fafc;font-weight:600;color:#0f172a;vertical-align:top;">Message</td>
+                <td style="padding:10px 12px;border:1px solid #e2e8f0;color:#1e293b;line-height:1.6;">${escapedMessage}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin:14px 0 0;font-size:12px;line-height:1.5;color:#64748b;">Tip: You can reply directly to this email and the response will go to the sender via the configured reply-to address.</p>
+        </div>
+      </div>
+    </div>
+  `;
 
   try {
     const response = await fetch("https://api.resend.com/emails", {
@@ -33,17 +81,19 @@ async function sendWithResend(options: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: fromEmail,
-        to: [toEmail],
+        from: contactMailConfig.fromEmail,
+        to: [contactMailConfig.toEmail],
         reply_to: options.email,
         subject: `Portfolio contact from ${options.name}`,
         text: [
           `Name: ${options.name}`,
           `Email: ${options.email}`,
+          `Submitted At (UTC): ${submittedAt}`,
           "",
           "Message:",
           options.message,
         ].join("\n"),
+        html,
       }),
     });
 
@@ -81,7 +131,7 @@ export async function submitContactForm(formData: FormData) {
       hasHoneypotValue: Boolean(company),
       hasValidEmail: EMAIL_PATTERN.test(email),
     },
-    resendConfigured: Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL),
+    resendConfigured: Boolean(process.env.RESEND_API_KEY),
   });
 
   if (company || isTooFast || hasSuspiciousLink) {
