@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { defaultLocale } from "../../content";
 import { getUiText } from "../../i18n/ui-text";
+import { formatDisplayDate } from "../../lib/date-format";
 import { CodeBlock } from "../../components/code-block";
 import { getProjectPostBySlug, projectPosts } from "../../../content/projects";
 
@@ -59,7 +60,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         <header className="space-y-3">
           <h1 className="section-title text-3xl sm:text-4xl">{project.title}</h1>
           <p className="text-sm text-zinc-500">
-            {project.date} · {project.readTime}
+            {formatDisplayDate(project.date)} · {project.readTime}
           </p>
           <p className="muted-text text-base text-zinc-700">{project.subtitle}</p>
           <div className="flex flex-wrap gap-2">

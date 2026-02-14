@@ -11,7 +11,7 @@ export const developmentLogPost: BlogPost = {
   blocks: [
     {
       type: "paragraph",
-      text: "This entry captures the exact state of the portfolio codebase as of 2026-02-14. The app is in active mid-stage development: core pages are usable, content flow is stable, and several planned features are intentionally postponed.",
+      text: "This entry captures the exact state of the portfolio codebase as of 14-02-2026. The app is in active mid-stage development: core pages are usable, content flow is stable, and several planned features are intentionally postponed.",
     },
     { type: "heading", text: "1) Stack and runtime choices" },
     {

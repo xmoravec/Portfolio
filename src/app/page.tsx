@@ -4,6 +4,7 @@ import { PhotoGallery } from "./components/photo-gallery";
 import { ProjectPostCard } from "./components/project-post-card";
 import { defaultLocale, getHomeContent } from "./content";
 import { getUiText } from "./i18n/ui-text";
+import { formatDisplayDate } from "./lib/date-format";
 import { blogPosts } from "../content/blog";
 import { projectPosts } from "../content/projects";
 
@@ -68,7 +69,7 @@ export default function Home() {
             {content.now.title}
           </h2>
           <p className="muted-text">{content.now.summary}</p>
-          <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {content.now.lastUpdated}</p>
+          <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {formatDisplayDate(content.now.lastUpdated)}</p>
           <Link href={content.now.cta.href} className="text-sm font-medium text-zinc-900 underline">
             {content.now.cta.label}
           </Link>
@@ -85,7 +86,14 @@ export default function Home() {
           </div>
           <div className="grid gap-4 xl:grid-cols-2">
             {featuredProject ? <ProjectPostCard project={featuredProject} compact openProjectDetailLabel={ui.projects.openProjectDetail} /> : null}
-            {featuredBlogPost ? <BlogPostCard post={featuredBlogPost} compact readArticleLabel={ui.blog.readArticle} /> : null}
+            {featuredBlogPost ? (
+              <BlogPostCard
+                post={featuredBlogPost}
+                compact
+                readArticleLabel={ui.blog.readArticle}
+                publishedLabel={ui.blog.publishedLabel}
+              />
+            ) : null}
           </div>
         </section>
       ) : null}

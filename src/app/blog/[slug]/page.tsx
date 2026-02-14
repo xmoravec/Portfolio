@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { defaultLocale } from "../../content";
+import { formatDisplayDate } from "../../lib/date-format";
 import { getUiText } from "../../i18n/ui-text";
 import { blogPosts, getBlogPostBySlug } from "../../../content/blog";
 import type { BlogBlock } from "../../../content/blog/types";
@@ -104,7 +105,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <header className="space-y-3">
           <h1 className="section-title text-3xl sm:text-4xl">{post.title}</h1>
           <p className="text-sm text-zinc-500">
-            {post.date} · {post.readTime}
+            {ui.blog.publishedLabel} {formatDisplayDate(post.date)} · {post.readTime}
           </p>
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (

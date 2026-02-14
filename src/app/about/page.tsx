@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { defaultLocale } from "../content";
 import { getUiText } from "../i18n/ui-text";
+import { formatDisplayDate } from "../lib/date-format";
 
 export default function AboutPage() {
   const ui = getUiText(defaultLocale);
@@ -31,7 +32,7 @@ export default function AboutPage() {
         <h2 className="section-title">{ui.about.nowTitle}</h2>
         <p className="muted-text">{ui.about.nowFirst}</p>
         <p className="muted-text">{ui.about.nowSecond}</p>
-        <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: 2026-02-14</p>
+        <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {formatDisplayDate("2026-02-14")}</p>
       </section>
     </main>
   );

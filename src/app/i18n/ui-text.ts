@@ -38,6 +38,9 @@ export type UiText = {
   blog: {
     pageTitle: string;
     pageDescription: string;
+    timelineTitle: string;
+    timelineDescription: string;
+    publishedLabel: string;
     readArticle: string;
     backToBlog: string;
   };
@@ -138,6 +141,10 @@ const enUiText: UiText = {
     pageTitle: "Writing and Notes",
     pageDescription:
       "Technical snapshots and decision logs from building this portfolio and related software work.",
+    timelineTitle: "Development Timeline",
+    timelineDescription:
+      "Current sequence: initial baseline (14-02-2026), then a later-stage milestone update (15-02-2026).",
+    publishedLabel: "Published",
     readArticle: "Read article",
     backToBlog: "← Back to main blog page",
   },
