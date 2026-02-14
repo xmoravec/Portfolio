@@ -10,7 +10,7 @@ export type BlogPostPreview = {
   summary: string;
 };
 
-export type Locale = "en" | "cs";
+export type Locale = "en" | "sk";
 
 export type HomeContent = {
   nav: NavItem[];
@@ -58,8 +58,7 @@ export type HomeContent = {
 
 export const defaultLocale: Locale = "en";
 
-export const homeContentByLocale: Record<Locale, HomeContent> = {
-  en: {
+const enHomeContent: HomeContent = {
     nav: [
       { label: "Projects", href: "/projects" },
       { label: "Technologies", href: "/technologies" },
@@ -134,83 +133,11 @@ export const homeContentByLocale: Record<Locale, HomeContent> = {
       githubHref: "https://github.com/xmoravec",
       githubHandle: "@xmoravec",
     },
-  },
-  cs: {
-    nav: [
-      { label: "Projekty", href: "/projects" },
-      { label: "Technologie", href: "/technologies" },
-      { label: "Blog", href: "/blog" },
-      { label: "Now", href: "/now" },
-      { label: "O mně", href: "/about" },
-      { label: "Kontakt", href: "/contact" },
-    ],
-    hero: {
-      eyebrow: "Osobní web",
-      title: "Ahoj, já jsem Xavier. Tvořím, učím se a sdílím, co právě řeším.",
-      description:
-        "Tohle je moje osobní místo na internetu. Najdeš tu poznámky, aktuální zaměření i vybranou práci.",
-      primaryCta: { label: "O mně", href: "/about" },
-      secondaryCta: { label: "Co právě dělám", href: "/now" },
-    },
-    intro: {
-      title: "Něco o mně",
-      paragraphs: [
-        "Baví mě měnit nápady na čisté a použitelné produkty. Záleží mi na čitelném kódu a smysluplném výsledku.",
-        "Kromě práce na projektech si píšu krátké poznámky o rozhodnutích a věcech, které se učím.",
-      ],
-    },
-    photos: {
-      title: "Fotky",
-      slots: [
-        { title: "Portrét", subtitle: "Místo pro fotku" },
-        { title: "Každodennost", subtitle: "Místo pro fotku" },
-        { title: "Pracovní prostor", subtitle: "Místo pro fotku" },
-      ],
-    },
-    now: {
-      title: "Now",
-      summary:
-        "Teď ladím osobní web a připravuji sekci pro budoucí slideshow fotek na homepage.",
-      lastUpdated: "2026-02-14",
-      cta: { label: "Otevřít stránku Now", href: "/now" },
-    },
-    writing: {
-      title: "Poslední články",
-      posts: [
-        {
-          title: "Jak udržuji osobní projekty v pohybu",
-          href: "/blog/how-i-keep-personal-projects-moving",
-          publishedAt: "2026-02-11",
-          summary: "Jednoduchý plánovací rytmus, který mi pomáhá pravidelně dodávat.",
-        },
-        {
-          title: "Poznámky k lepšímu soustředění",
-          href: "/blog/notes-on-better-focus",
-          publishedAt: "2026-01-30",
-          summary: "Praktická omezení, která používám proti přepínání kontextu.",
-        },
-      ],
-    },
-    explore: {
-      title: "Další obsah",
-      description:
-        "Projekty a technologie mají vlastní stránky, aby homepage zůstala osobní a jednoduchá.",
-      links: [
-        { label: "Projekty", href: "/projects" },
-        { label: "Technologie", href: "/technologies" },
-      ],
-    },
-    contact: {
-      title: "Pojďme se spojit",
-      description: "Pokud mi chceš napsat, použij kontaktní stránku.",
-      cta: { label: "Kontakt", href: "/contact" },
-    },
-    footer: {
-      githubLabel: "GitHub",
-      githubHref: "https://github.com/xmoravec",
-      githubHandle: "@xmoravec",
-    },
-  },
+  };
+
+export const homeContentByLocale: Record<Locale, HomeContent> = {
+  en: enHomeContent,
+  sk: enHomeContent,
 };
 
 export function getHomeContent(locale: string): HomeContent {
