@@ -108,14 +108,14 @@ const enHomeContent: HomeContent = {
       title: "Latest Writing",
       posts: [
         {
-          title: "How I Keep Personal Projects Moving",
-          href: "/blog",
-          publishedAt: "2026-02-11",
-          summary: "A lightweight planning rhythm that helps me ship consistently.",
+          title: "Development Log: Building This Personal Website",
+          href: "/blog/post?slug=portfolio-development-log",
+          publishedAt: "2026-02-14",
+          summary: "A practical log of architecture, styling decisions, and iterative build steps.",
         },
         {
           title: "Notes on Better Focus",
-          href: "/blog",
+          href: "/blog/post?slug=notes-on-better-focus",
           publishedAt: "2026-01-30",
           summary: "Simple constraints I use to reduce context switching.",
         },

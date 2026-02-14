@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
+import { PhotoGallery } from "./components/photo-gallery";
 import { defaultLocale, getHomeContent } from "./content";
 
 export default function Home() {
   const content = getHomeContent(defaultLocale);
-  const [portrait, everyday, community, places] = content.photos.items;
 
   return (
     <main className="page-shell">
@@ -39,30 +38,7 @@ export default function Home() {
         <h2 id="photos-heading" className="section-title">
           {content.photos.title}
         </h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {[portrait, everyday, community].map((photo) => (
-            <figure key={photo.src} className="section-card overflow-hidden p-0">
-              <div className="relative aspect-4/5 w-full">
-                <Image src={photo.src} alt={photo.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
-              </div>
-              <figcaption className="space-y-1 p-4">
-                <p className="text-sm font-medium text-zinc-900">{photo.title}</p>
-                <p className="text-xs text-zinc-500">{photo.subtitle}</p>
-              </figcaption>
-            </figure>
-          ))}
-          {places && (
-            <figure className="section-card overflow-hidden p-0 md:col-span-2">
-              <div className="relative aspect-video w-full">
-                <Image src={places.src} alt={places.alt} fill className="object-cover" sizes="100vw" priority />
-              </div>
-              <figcaption className="space-y-1 p-4">
-                <p className="text-sm font-medium text-zinc-900">{places.title}</p>
-                <p className="text-xs text-zinc-500">{places.subtitle}</p>
-              </figcaption>
-            </figure>
-          )}
-        </div>
+        <PhotoGallery items={content.photos.items} />
       </section>
 
       <section aria-labelledby="intro-heading" className="section-card space-y-4">
