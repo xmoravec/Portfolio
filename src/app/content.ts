@@ -1,8 +1,3 @@
-export type NavItem = {
-  label: string;
-  href: string;
-};
-
 export type BlogPostPreview = {
   title: string;
   href: string;
@@ -13,7 +8,6 @@ export type BlogPostPreview = {
 export type Locale = "en" | "sk";
 
 export type HomeContent = {
-  nav: NavItem[];
   hero: {
     eyebrow: string;
     title: string;
@@ -27,7 +21,7 @@ export type HomeContent = {
   };
   photos: {
     title: string;
-    slots: { title: string; subtitle: string }[];
+    items: { src: string; alt: string; title: string; subtitle: string }[];
   };
   now: {
     title: string;
@@ -59,21 +53,13 @@ export type HomeContent = {
 export const defaultLocale: Locale = "en";
 
 const enHomeContent: HomeContent = {
-    nav: [
-      { label: "Projects", href: "/projects" },
-      { label: "Technologies", href: "/technologies" },
-      { label: "Blog", href: "/blog" },
-      { label: "Now", href: "/now" },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-    ],
     hero: {
-      eyebrow: "Personal Website",
-      title: "Hi, I’m Xavier. I build, learn, and share what I’m exploring.",
+      eyebrow: "Personal Site",
+      title: "Hi, I’m Erik. I build, learn, and share what I’m exploring.",
       description:
         "Welcome to my corner of the internet. This is where I keep personal notes, current focus, and selected work in one place.",
       primaryCta: { label: "About Me", href: "/about" },
-      secondaryCta: { label: "What I’m Doing Now", href: "/now" },
+      secondaryCta: { label: "What I’m Doing Now", href: "/about#now" },
     },
     intro: {
       title: "A bit about me",
@@ -84,10 +70,31 @@ const enHomeContent: HomeContent = {
     },
     photos: {
       title: "Photos",
-      slots: [
-        { title: "Portrait", subtitle: "Photo placeholder" },
-        { title: "Everyday", subtitle: "Photo placeholder" },
-        { title: "Workspace", subtitle: "Photo placeholder" },
+      items: [
+        {
+          src: "/images/photos/profile_picture_portugal_chair.jpg",
+          alt: "Personal portrait seated outdoors",
+          title: "Portrait",
+          subtitle: "A calmer side of my day-to-day",
+        },
+        {
+          src: "/images/photos/profile_picture_shirt_old.jpg",
+          alt: "Personal portrait in shirt",
+          title: "Everyday",
+          subtitle: "Simple moments, no filters",
+        },
+        {
+          src: "/images/photos/oktoberfest_table.jpg",
+          alt: "Social table moment",
+          title: "Community",
+          subtitle: "People and conversations matter",
+        },
+        {
+          src: "/images/photos/brooklyn_bridge.jpg",
+          alt: "Brooklyn Bridge city view",
+          title: "Places",
+          subtitle: "Movement, cities, and perspective",
+        },
       ],
     },
     now: {
@@ -95,20 +102,20 @@ const enHomeContent: HomeContent = {
       summary:
         "Currently refining this personal site and preparing a future photo slideshow section for the homepage.",
       lastUpdated: "2026-02-14",
-      cta: { label: "Open Now Page", href: "/now" },
+      cta: { label: "Read More", href: "/about#now" },
     },
     writing: {
       title: "Latest Writing",
       posts: [
         {
           title: "How I Keep Personal Projects Moving",
-          href: "/blog/how-i-keep-personal-projects-moving",
+          href: "/blog",
           publishedAt: "2026-02-11",
           summary: "A lightweight planning rhythm that helps me ship consistently.",
         },
         {
           title: "Notes on Better Focus",
-          href: "/blog/notes-on-better-focus",
+          href: "/blog",
           publishedAt: "2026-01-30",
           summary: "Simple constraints I use to reduce context switching.",
         },
@@ -117,10 +124,10 @@ const enHomeContent: HomeContent = {
     explore: {
       title: "Explore More",
       description:
-        "Projects and technology details live on dedicated pages so the homepage stays personal and simple.",
+        "Project details and technical notes live on the Projects page so this homepage stays personal and simple.",
       links: [
         { label: "Projects", href: "/projects" },
-        { label: "Technologies", href: "/technologies" },
+        { label: "Blog", href: "/blog" },
       ],
     },
     contact: {
