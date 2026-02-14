@@ -113,7 +113,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           <p className="muted-text text-base">{ui.projects.implementationDescription}</p>
           <div className="space-y-4">
             {project.codeSamples.map((sample) => (
-              <CodeBlock key={sample.title} title={sample.title} code={sample.code} />
+              <CodeBlock
+                key={sample.title}
+                title={sample.title}
+                code={sample.code}
+                enableCopy
+                copyLabel={ui.projects.copyCode}
+                copiedLabel={ui.projects.copiedCode}
+              />
             ))}
           </div>
         </section>

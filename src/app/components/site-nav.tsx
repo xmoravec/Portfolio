@@ -82,10 +82,10 @@ export function SiteNav({ labels }: SiteNavProps) {
       </button>
 
       {isMenuOpen ? (
-        <div className="fixed inset-0 z-50 md:hidden" role="presentation">
+          <div className="fixed inset-0 z-70 isolate md:hidden" role="presentation">
           <button
             type="button"
-            className="absolute inset-0 z-0 bg-zinc-950/55 backdrop-blur-[2px]"
+              className="absolute inset-0 z-10 bg-zinc-950/55 backdrop-blur-[2px]"
             aria-label={labels.closeMenuAria}
             onClick={() => setIsMenuOpen(false)}
           />
@@ -94,7 +94,7 @@ export function SiteNav({ labels }: SiteNavProps) {
             role="dialog"
             aria-modal="true"
             aria-label={labels.mobileNavAria}
-            className="absolute right-0 top-0 z-10 flex h-full w-[86vw] min-w-[18rem] max-w-sm flex-col border-l border-zinc-700 bg-zinc-900 p-5 text-zinc-100 shadow-2xl shadow-black/40"
+              className="fixed inset-y-0 right-0 z-20 flex w-[88vw] max-w-sm flex-col overflow-y-auto border-l border-zinc-700 bg-zinc-900/95 p-5 text-zinc-100 shadow-2xl shadow-black/40 supports-backdrop-filter:bg-zinc-900/90"
           >
             <div className="mb-6 flex items-center justify-between">
               <p className="text-sm font-semibold text-white">{labels.menu}</p>

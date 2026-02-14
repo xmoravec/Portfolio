@@ -72,11 +72,6 @@ Production readiness depends mainly on environment configuration, domain wiring,
 
 ### Short term
 
-- **Mobile UI pass**
-	- Audit all pages for spacing, typography scale, sticky header behavior, and tap targets on smaller breakpoints.
-	- Re-check horizontal sections (gallery, featured cards, nav wrapping) for smooth usability on narrow screens.
-	- Remove any desktop-first assumptions in content density and section rhythm.
-
 - **Buy Me a Coffee button**
 	- Add a clear, non-intrusive support CTA with placement that does not compete with project/contact primary actions.
 	- Decide where this belongs (likely footer and/or contact page) and keep visual hierarchy consistent.

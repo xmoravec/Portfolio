@@ -1,7 +1,14 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 type CodeBlockProps = {
   code: string;
   title?: string;
   compact?: boolean;
+  enableCopy?: boolean;
+  copyLabel?: string;
+  copiedLabel?: string;
 };
 
 const KEYWORDS = new Set([
@@ -94,13 +101,56 @@ function tokenizeCode(line: string, lineIndex: number) {
   return rendered;
 }
 
-export function CodeBlock({ code, title, compact = false }: CodeBlockProps) {
+export function CodeBlock({
+  code,
+  title,
+  compact = false,
+  enableCopy = false,
+  copyLabel = "Copy",
+  copiedLabel = "Copied",
+}: CodeBlockProps) {
   const lines = code.split("\n");
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setCopied(false);
+    }, 1400);
+
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  async function handleCopy() {
+    if (!enableCopy) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-950 shadow-[0_12px_30px_-12px_rgba(15,23,42,0.9)]">
-      <div className="flex items-center justify-end border-b border-zinc-800 bg-zinc-900/80 px-4 py-2">
+      <div className="flex items-center justify-between gap-2 border-b border-zinc-800 bg-zinc-900/80 px-4 py-2">
         <p className="rounded-full border border-zinc-700 bg-zinc-900 px-2.5 py-0.5 text-xs text-zinc-400">{title ?? "typescript"}</p>
+        {enableCopy ? (
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="inline-flex h-7 items-center rounded-md border border-zinc-700 bg-zinc-900 px-2.5 text-xs font-medium text-zinc-200 transition hover:bg-zinc-800"
+            aria-label={copyLabel}
+          >
+            {copied ? copiedLabel : copyLabel}
+          </button>
+        ) : null}
       </div>
 
       <pre className={`overflow-x-auto bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(236,72,153,0.12),transparent_42%)] px-0 py-3 text-zinc-100 ${compact ? "text-xs" : "text-sm"}`}>

@@ -34,8 +34,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur">
-          <div className="mx-auto flex w-full max-w-none items-center justify-between px-4 py-3 sm:px-6 md:max-w-7xl md:px-10">
+        <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95">
+          <div className="mx-auto flex w-full max-w-none items-center justify-between px-4 py-3 sm:px-6 lg:max-w-7xl lg:px-10">
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
               Erik Moravec
             </Link>

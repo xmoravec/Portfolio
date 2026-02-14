@@ -52,6 +52,8 @@ export type UiText = {
     implementationTitle: string;
     implementationDescription: string;
     focusTitle: string;
+    copyCode: string;
+    copiedCode: string;
   };
   photos: {
     openPhotoDetailsPrefix: string;
@@ -152,6 +154,8 @@ const enUiText: UiText = {
     implementationDescription:
       "Reusable code surfaces mirror the style used in project previews and deeper technical pages.",
     focusTitle: "Current Focus",
+    copyCode: "Copy",
+    copiedCode: "Copied",
   },
   photos: {
     openPhotoDetailsPrefix: "Open photo details for",
