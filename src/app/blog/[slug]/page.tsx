@@ -98,7 +98,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <main className="page-shell motion-shell">
       <article className="section-card space-y-6">
         <header className="space-y-3">
-          <span className="pill">Development Notes</span>
           <h1 className="section-title text-3xl sm:text-4xl">{post.title}</h1>
           <p className="text-sm text-zinc-500">
             {post.date} · {post.readTime}

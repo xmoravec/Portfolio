@@ -5,7 +5,6 @@ export default function BlogPage() {
   return (
     <main className="page-shell motion-shell">
       <section className="space-y-4">
-        <span className="pill">Blog</span>
         <h1 className="section-title text-4xl sm:text-5xl">Writing and Notes</h1>
         <p className="muted-text max-w-2xl">
           Technical snapshots and decision logs from building this portfolio and related software work.

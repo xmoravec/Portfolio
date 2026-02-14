@@ -48,7 +48,6 @@ export default function ProjectsPage() {
   return (
     <main className="page-shell motion-shell">
       <section className="space-y-4">
-        <span className="pill">Projects</span>
         <h1 className="section-title text-4xl sm:text-5xl">Selected Work</h1>
         <p className="muted-text max-w-2xl">
           A focused set of projects with practical outcomes. Full case studies will keep expanding with implementation notes and measurable impact.

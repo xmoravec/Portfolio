@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <main className="page-shell motion-shell">
       <section className="flex flex-col gap-6" aria-labelledby="hero-heading">
-        <span className="pill w-fit">{content.hero.eyebrow}</span>
         <h1
           id="hero-heading"
           className="max-w-3xl text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl"

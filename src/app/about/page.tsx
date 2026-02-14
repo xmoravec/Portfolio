@@ -4,7 +4,6 @@ export default function AboutPage() {
   return (
     <main className="page-shell motion-shell">
       <section className="space-y-4">
-        <span className="pill">About</span>
         <h1 className="section-title text-4xl sm:text-5xl">About Me</h1>
       </section>
 
