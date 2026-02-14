@@ -22,6 +22,7 @@ A high-speed, sleek portfolio site that showcases my skills, resume, and key pro
 - **Interactive project cards** with live previews or small interactive snippets instead of static screenshots.
 - Clear **links into the Playground/Lab** for experimental or in-progress projects.
 - **Tech stack explanation**: not just logos, but short notes on *why* I chose each tool.
+- Blog page
 
 ## Auth / Admin Strategy
 
@@ -36,15 +37,6 @@ A high-speed, sleek portfolio site that showcases my skills, resume, and key pro
 2. Set up Tailwind CSS and shadcn/ui.
 3. Deploy the boilerplate to Vercel as early as possible.
 4. Add core pages: Home, Projects, Blog, Now, and a Contact or About page.
-
-## Critical Pitfalls to Avoid
-
-### Over-engineering
-- Do not add a database or complex state management for the public site.
-- Keep it static-first for simplicity and 100% uptime.
-
-### Design bloat
-- Avoid heavy animations or unnecessary effects that hurt Lighthouse performance and perceived speed.
 
 ## Domain & Deployment
 
@@ -62,6 +54,6 @@ A high-speed, sleek portfolio site that showcases my skills, resume, and key pro
 - Prominent **links from Portfolio projects into the Lab** (`lab.yourname.com`) for live demos.
 - Clear indication that the Lab is experimental and may be less stable.
 
----
+## Next Concrete Steps
 
-For the experimental sandbox, see [README_LAB.md](README_LAB.md).
+1. Scaffold and deploy the Portfolio (Project 1) to Vercel.
