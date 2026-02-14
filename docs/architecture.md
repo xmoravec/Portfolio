@@ -21,6 +21,7 @@ This document is the technical source of truth for this portfolio codebase. Keep
 - **ESLint** `^9` with `eslint-config-next` core-web-vitals and TypeScript presets
 - **Fonts**: `next/font` with Geist + Geist Mono
 - **Image optimization**: `next/image`
+- **Image delivery tuning**: AVIF/WebP output enabled in Next config, plus responsive sizing/quality strategy on gallery images
 
 No database and no CMS are used currently. Content is authored in TypeScript source files and bundled at build-time.
 
@@ -121,6 +122,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 - Home page uses mixed stacked + grid composition to improve horizontal rhythm
 - Home page includes horizontal featured presentation for both projects and blog content using shared card components with code previews
 - Photo gallery is a horizontal snap rail with modal enlargement on click
+- Gallery image delivery is tuned for Lighthouse performance: only first thumbnail is eager/high-priority, other thumbnails are lazy-loaded, and thumbnail/modal quality is explicitly controlled
 
 ### 5.3 Motion System
 

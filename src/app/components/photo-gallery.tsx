@@ -50,8 +50,11 @@ export function PhotoGallery({ items }: PhotoGalleryProps) {
                 alt={photo.alt}
                 fill
                 className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                sizes="(max-width: 768px) 72vw, (max-width: 1024px) 44vw, 30vw"
-                priority
+                sizes="(max-width: 768px) 72vw, (max-width: 1024px) 44vw, 420px"
+                quality={60}
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
               />
             </div>
             <figcaption className="space-y-1 p-4">
@@ -75,7 +78,15 @@ export function PhotoGallery({ items }: PhotoGalleryProps) {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="relative aspect-video w-full">
-              <Image src={activePhoto.src} alt={activePhoto.alt} fill className="object-contain" sizes="100vw" priority />
+              <Image
+                src={activePhoto.src}
+                alt={activePhoto.alt}
+                fill
+                className="object-contain"
+                sizes="(max-width: 1280px) 100vw, 1200px"
+                quality={72}
+                priority
+              />
             </div>
             <div className="flex items-center justify-between gap-4 p-4 text-white">
               <div>
