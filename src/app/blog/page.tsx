@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BlogPostCard } from "../components/blog-post-card";
 import { blogPosts } from "../../content/blog";
 
 export default function BlogPage() {
@@ -13,27 +13,7 @@ export default function BlogPage() {
 
       <section className="space-y-3">
         {blogPosts.map((post) => (
-          <article key={post.slug} className="section-card space-y-2">
-            <p className="text-xs text-zinc-500">
-              {post.date} · {post.readTime}
-            </p>
-            <h2 className="text-xl font-semibold text-zinc-900">
-              <Link href={`/blog/${post.slug}`} className="transition hover:text-zinc-700 hover:underline">
-                {post.title}
-              </Link>
-            </h2>
-            <p className="muted-text">{post.summary}</p>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span key={tag} className="pill">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <Link href={`/blog/${post.slug}`} className="inline-block text-sm font-medium text-blue-700 hover:underline">
-              Read article
-            </Link>
-          </article>
+          <BlogPostCard key={post.slug} post={post} compact />
         ))}
       </section>
     </main>

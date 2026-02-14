@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="page-shell motion-shell">
-      <article className="section-card space-y-6">
+      <article className="section-card space-y-8">
         <header className="space-y-3">
           <h1 className="section-title text-3xl sm:text-4xl">{post.title}</h1>
           <p className="text-sm text-zinc-500">
@@ -113,8 +113,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="space-y-4">{post.blocks.map((block) => renderBlock(block))}</div>
 
-        <footer className="pt-3">
-          <Link href="/blog" className="button-secondary">
+        <footer className="flex items-center gap-3 pt-4">
+          <Link href="/blog" className="button-secondary px-5 py-2.5 text-base">
             ← Back to main blog page
           </Link>
         </footer>

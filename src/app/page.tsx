@@ -1,9 +1,15 @@
 import Link from "next/link";
+import { BlogPostCard } from "./components/blog-post-card";
 import { PhotoGallery } from "./components/photo-gallery";
+import { ProjectPostCard } from "./components/project-post-card";
 import { defaultLocale, getHomeContent } from "./content";
+import { blogPosts } from "../content/blog";
+import { projectPosts } from "../content/projects";
 
 export default function Home() {
   const content = getHomeContent(defaultLocale);
+  const featuredProject = projectPosts[0];
+  const featuredBlogPost = blogPosts[0];
 
   return (
     <main className="page-shell motion-shell">
@@ -67,27 +73,20 @@ export default function Home() {
         </section>
       </div>
 
-      <section aria-labelledby="blog-heading" className="space-y-4">
-        <h2 id="blog-heading" className="section-title">
-          {content.writing.title}
-        </h2>
-        <div className="grid gap-4 lg:grid-cols-2">
-          {content.writing.posts.map((post) => (
-            <article key={post.href + post.title} className="section-card space-y-2">
-              <p className="text-xs text-zinc-500">{post.publishedAt}</p>
-              <h3 className="mt-1 text-lg font-semibold text-zinc-900">
-                <Link href={post.href} className="transition hover:text-zinc-700">
-                  {post.title}
-                </Link>
-              </h3>
-              <p className="muted-text">{post.summary}</p>
-              <Link href={post.href} className="mt-2 inline-block text-sm font-medium text-zinc-900 underline">
-                Read post
-              </Link>
-            </article>
-          ))}
-        </div>
-      </section>
+      {featuredProject || featuredBlogPost ? (
+        <section aria-labelledby="featured-heading" className="space-y-4">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 id="featured-heading" className="section-title">
+              Featured Work and Writing
+            </h2>
+            <p className="text-sm text-zinc-500">Curated entries with live technical previews.</p>
+          </div>
+          <div className="grid gap-4 xl:grid-cols-2">
+            {featuredProject ? <ProjectPostCard project={featuredProject} compact /> : null}
+            {featuredBlogPost ? <BlogPostCard post={featuredBlogPost} compact /> : null}
+          </div>
+        </section>
+      ) : null}
 
       <div className="grid gap-4 lg:grid-cols-2">
         <section aria-labelledby="explore-heading" className="section-card space-y-3">

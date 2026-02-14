@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { SiteNav } from "./components/site-nav";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,13 +21,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 
-const navItems = [
-  { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,13 +36,7 @@ export default function RootLayout({
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
               Erik Moravec
             </Link>
-            <nav aria-label="Primary" className="ml-10 flex flex-wrap items-center justify-end gap-6 text-sm text-zinc-600 sm:ml-14">
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href} className="transition hover:text-blue-700">
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <SiteNav />
           </div>
         </header>
         {children}

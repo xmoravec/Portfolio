@@ -35,6 +35,9 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - Home page, fed by structured content model
 - `src/app/about/page.tsx`
 - `src/app/projects/page.tsx`
+- `src/app/projects/[slug]/page.tsx`
+  - Dynamic project detail route with canonical metadata
+  - Rich DOM-focused detail layout (not restricted to blog-style text blocks)
 - `src/app/blog/page.tsx`
 - `src/app/blog/[slug]/page.tsx`
   - Dynamic blog detail route
@@ -45,6 +48,14 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - Contact UI with form submission feedback
 - `src/app/contact/actions.ts`
   - Server action for validation, anti-spam, and optional email delivery via Resend
+- `src/app/components/site-nav.tsx`
+  - Path-aware navigation with conditional Home link on non-home routes
+- `src/app/components/code-block.tsx`
+  - Reusable highlighted code display surface with compact/full variants
+- `src/app/components/blog-post-card.tsx`
+  - Reusable blog preview card used in blog listing and homepage featured section
+- `src/app/components/project-post-card.tsx`
+  - Reusable project preview card used in projects listing and homepage featured section
 
 ### 3.2 Content Architecture
 
@@ -55,8 +66,12 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - `src/content/blog/types.ts` for schema
   - `src/content/blog/index.ts` for index and lookup
   - `src/content/blog/posts/development-log.ts` for actual post content
+- Project content source:
+  - `src/content/projects/types.ts` for schema
+  - `src/content/projects/index.ts` for index and lookup
+  - `src/content/projects/portfolio-project.ts` for current real project entry
 
-The blog rendering model is block-based typed content (`heading`, `paragraph`, `quote`, `list`, `code`) rendered directly by route component logic.
+The blog rendering model is block-based typed content (`heading`, `paragraph`, `quote`, `list`, `code`) rendered directly by route component logic. Projects use slug-based routing too, but the detail page is DOM-first and can mix richer layouts and custom UI sections without being constrained to a text block schema.
 
 ## 4) Routing and SEO Decisions
 
@@ -77,6 +92,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
   - `description`
   - `alternates.canonical`
   - Open Graph article metadata
+- Project-level metadata generated in `projects/[slug]/page.tsx`
+  - Same canonical + Open Graph approach for project detail pages
 
 ## 5) Styling System
 
@@ -92,11 +109,17 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
   - `button-secondary`
   - `pill`
   - `horizontal-scroll`
+- Reusable code display component in `src/app/components/code-block.tsx`
+  - Colorized token rendering
+  - Window-style header accents
+  - Line numbers and gradient surface
+  - Used in project previews and detail examples
 
 ### 5.2 Layout Behavior
 
 - Wider max container (`max-w-6xl` to `xl:max-w-7xl`) to reduce over-constrained center-column feel on large displays
 - Home page uses mixed stacked + grid composition to improve horizontal rhythm
+- Home page includes horizontal featured presentation for both projects and blog content using shared card components with code previews
 - Photo gallery is a horizontal snap rail with modal enlargement on click
 
 ### 5.3 Motion System
@@ -167,8 +190,12 @@ Current app assumptions:
 ### Working
 
 - Core pages: Home, About, Projects, Blog list, Blog detail, Contact
+- Dynamic project routes and canonical metadata
 - Dynamic blog routes and canonical metadata
 - Legacy blog URL compatibility redirect
+- Path-aware global navigation with Home shortcut on non-home pages
+- Reusable highlighted code block UI for project preview/detail
+- Reusable blog/project featured cards with thumbnail-like code previews
 - Contact form validation + anti-spam + optional Resend integration
 - Subtle motion layer with reduced-motion support
 
