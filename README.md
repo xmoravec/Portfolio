@@ -1,111 +1,133 @@
-# Professional Portfolio
+# Erik Moravec Portfolio
 
-A high-speed, sleek portfolio site that showcases my skills, resume, and key projects—serving as the stable public face of my work.
+Personal website and working portfolio built with Next.js App Router.  
+The project combines practical presentation pages (about, projects, contact) with development-facing content (project write-ups and engineering logs) so it can function both as a public profile and a technical notebook.
 
-## Tech Stack
+## Current Focus
 
-- **Frontend**: Next.js (App Router)
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui (for a clean, professional look)
-- **Content**: Markdown/MDX for blog posts and project pages
-- **Deployment**: Vercel (automated builds, global CDN, free tier)
+This codebase is in the "polish and production wiring" phase: core routes are implemented, content model is established, and current work is focused on content quality, mobile UX refinements, delivery integrations, and production launch hardening.
 
-## Architecture & Approach
+## Technology Stack
 
-- Prefer **Static Site Generation (SSG)** for instant load times and reliability.
-- Use **serverless functions only when necessary**, e.g. for a contact form.
-- Keep the overall system **static and simple** to maximize uptime and minimize operational overhead.
+- **Framework**: Next.js `16.1.6` with App Router
+- **UI**: React `19.2.3`
+- **Language**: TypeScript `^5`
+- **Styling**: Tailwind CSS `^4` (via `@tailwindcss/postcss`)
+- **Linting**: ESLint `^9` with `eslint-config-next`
+- **Typography**: `next/font` with Geist + Geist Mono
+- **Media delivery**: `next/image` with AVIF/WebP formats configured in `next.config.ts`
 
-## Content & UX Plan
+## Architecture Summary
 
-- **"Now" page** describing what I am currently learning or working on.
-- **Interactive project cards** with live previews or small interactive snippets instead of static screenshots.
-- Clear **links into the Playground/Lab** for experimental or in-progress projects.
-- **Tech stack explanation**: not just logos, but short notes on *why* I chose each tool.
-- Blog page
+### Routing
 
-## Auth / Admin Strategy
+- Static-first page structure under `src/app`
+- Dynamic slug routes for:
+	- `projects/[slug]`
+	- `blog/[slug]`
+- Legacy compatibility route `blog/post` redirects query-based links to canonical slug URLs
 
-- Avoid user-facing login for the public portfolio.
-- If I need content management, build a **lightweight admin panel** for myself:
-	- Auth-protected CMS-like UI.
-	- Ability to create/edit blog posts and project entries without redeploying code.
+### Content model
 
-## Initial Implementation Plan
+- Home page content is typed and centralized in `src/app/content.ts`
+- Blog entries are managed in `src/content/blog/*`
+- Project entries are managed in `src/content/projects/*`
+- Content is currently authored in TypeScript modules (no CMS, no DB)
 
-1. Initialize the app with `npx create-next-app@latest` using the App Router.
-2. Set up Tailwind CSS and shadcn/ui.
-3. Deploy the boilerplate to Vercel as early as possible.
-4. Add core pages: Home, Projects, Blog, Now, and a Contact or About page.
+### UI composition
 
-## Domain & Deployment
+- Shared card and code-preview components are used across homepage and listing pages
+- Reusable gallery component supports horizontal browsing + enlarged photo view
+- Global style primitives are defined in `src/app/globals.css` (`page-shell`, `section-card`, `button-*`, etc.)
 
-- **Domain**: `yourname.com`
-- **Platform**: Vercel (automated deployments, global CDN)
-- **Separation**: The Portfolio remains independent from the experimental Playground/Lab
+### Contact flow
 
-## Performance & Accessibility
+- Contact form submits to a server action in `src/app/contact/actions.ts`
+- Validation and anti-spam checks include:
+	- required field rules
+	- email format check
+	- honeypot field
+	- too-fast submit timing guard
+	- suspicious short-link heuristic
+- Email delivery is prepared through Resend API
+- If mail envs are missing, the flow degrades safely to queued/not-configured behavior
 
-- Regularly run Lighthouse audits and keep scores high.
-- Follow basic accessibility practices (semantic HTML, focus states, ARIA where needed).
+## Environment Variables
 
-## Cross-Project Integration
+- `NEXT_PUBLIC_SITE_URL` — canonical metadata base URL
+- `RESEND_API_KEY` — Resend authentication key
+- `CONTACT_TO_EMAIL` — destination inbox for contact submissions
+- `CONTACT_FROM_EMAIL` — optional sender identity override
 
-- Prominent **links from Portfolio projects into the Lab** (`lab.yourname.com`) for live demos.
-- Clear indication that the Lab is experimental and may be less stable.
+## Deployment Direction
 
-## Next Concrete Steps
+Target platform is Vercel with static-first rendering and selective server-side behavior for form submission.  
+Production readiness depends mainly on environment configuration, domain wiring, content pass, and final quality checks (mobile + Lighthouse + SEO consistency).
 
-1. Scaffold and deploy the Portfolio (Project 1) to Vercel.
+## Documentation
 
-## NextJS
+- Technical architecture source of truth: `docs/architecture.md`
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Roadmap
 
-## Getting Started
+### Short term
 
-First, run the development server:
+- **Wire email with Resend end-to-end**
+	- Finalize verified sending domain and sender identity for production-safe deliverability.
+	- Confirm `CONTACT_TO_EMAIL` / `CONTACT_FROM_EMAIL` routing behavior in Vercel envs.
+	- Add one real-world submit test path (success + fallback + failure messaging).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Mobile UI pass**
+	- Audit all pages for spacing, typography scale, sticky header behavior, and tap targets on smaller breakpoints.
+	- Re-check horizontal sections (gallery, featured cards, nav wrapping) for smooth usability on narrow screens.
+	- Remove any desktop-first assumptions in content density and section rhythm.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Buy Me a Coffee button**
+	- Add a clear, non-intrusive support CTA with placement that does not compete with project/contact primary actions.
+	- Decide where this belongs (likely footer and/or contact page) and keep visual hierarchy consistent.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Update content quality and structure**
+	- Run a full copy-edit pass across all pages for tone, grammar, consistency, and confidence.
+	- Expand/clarify `acquamarea` project context (scope, outcome, technical contribution).
+	- Rework About section details for school, DHL, and other relevant experience with clearer chronology.
+	- Clean up photos: curate the image set, remove weak duplicates, and improve captions/alt text quality.
+	- Add a dedicated college projects section with GitHub references and interesting snippets/examples (C, Python, and other representative coursework code).
 
-## Contact Form (Serverless + Resend)
+- **EN/SK translations**
+	- Split currently shared locale content into real bilingual entries.
+	- Define translation coverage per section (home hero, about, project summaries, blog metadata, contact labels).
+	- Add a simple language-switching UX and verify URL/metadata behavior per locale.
 
-The contact form is wired through a server action and can send email through Resend when environment variables are set.
+- **Add Vercel monitoring support**
+	- Enable Vercel Analytics and Speed Insights for production visibility.
+	- Define a minimal monitoring baseline for web vitals, route performance, and high-level availability checks.
+	- Add an incident checklist for what to inspect first when performance or delivery degrades.
 
-Set these in Vercel project envs (and optionally local `.env.local`):
+- **Vercel deploy**
+	- Create/clean production project settings, set env vars, and confirm predictable build output.
+	- Validate route behavior and metadata on deployed domain preview before final switch.
 
-- `RESEND_API_KEY`
-- `CONTACT_TO_EMAIL`
-- `CONTACT_FROM_EMAIL` (optional, defaults to `Portfolio Contact <onboarding@resend.dev>`)
-- `NEXT_PUBLIC_SITE_URL` (used for canonical metadata, e.g. `https://yourdomain.com`)
+- **Check Lighthouse score**
+	- Run performance/accessibility/SEO audits on home, projects, blog detail, and contact pages.
+	- Prioritize improvements with direct user impact (LCP image handling, contrast, semantic structure, interaction feedback).
 
-If Resend variables are not configured, the form still validates and responds safely without crashing.
+- **Register domain `xmoravec`**
+	- Choose final TLD and registrar setup for long-term maintainability.
+	- Document renewal, DNS ownership, and transfer notes to avoid lock-in surprises.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Use new domain on Vercel and as email target/sender**
+	- Point DNS to Vercel and complete SSL + canonical URL setup.
+	- Align contact sender address and receiving mailbox with the new domain.
+	- Verify SPF/DKIM/DMARC basics for reliable outbound contact delivery.
 
-## Learn More
+- **Development log: first deployment entry**
+	- Publish a blog/dev-log entry summarizing first production deployment.
+	- Include what was added, what changed since local-only version, what remains open, and what was intentionally postponed.
 
-To learn more about Next.js, take a look at the following resources:
+### Long term
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Clickable technology and content tags with filtering + paging**
+	- Make technology/taxonomy tags interactive across projects and blog entries.
+	- Implement route-friendly filtering state (shareable URL params) and scalable pagination.
+	- Keep filter UX fast, predictable, and understandable on both desktop and mobile.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
