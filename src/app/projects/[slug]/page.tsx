@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { defaultLocale } from "../../content";
+import { getUiText } from "../../i18n/ui-text";
 import { CodeBlock } from "../../components/code-block";
 import { getProjectPostBySlug, projectPosts } from "../../../content/projects";
 
@@ -13,12 +15,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
+  const ui = getUiText(defaultLocale);
   const { slug } = await params;
   const project = getProjectPostBySlug(slug);
 
   if (!project) {
     return {
-      title: "Project not found | Erik Moravec",
+      title: ui.metadata.projectNotFoundTitle,
       robots: { index: false, follow: false },
     };
   }
@@ -42,6 +45,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+  const ui = getUiText(defaultLocale);
   const { slug } = await params;
   const project = getProjectPostBySlug(slug);
 
@@ -68,7 +72,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </header>
 
         <section className="space-y-3">
-          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">Project Intent</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">{ui.projects.intentTitle}</h2>
           <p className="muted-text text-base">{project.summary}</p>
           <ul className="space-y-2">
             {project.goals.map((goal) => (
@@ -82,7 +86,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         <section className="grid gap-4 lg:grid-cols-2">
           <article className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5">
-            <h3 className="text-lg font-semibold text-zinc-900">Architecture Snapshot</h3>
+            <h3 className="text-lg font-semibold text-zinc-900">{ui.projects.architectureTitle}</h3>
             <ul className="mt-3 space-y-2">
               {project.architecture.map((item) => (
                 <li key={item} className="text-sm leading-6 text-zinc-700">
@@ -93,7 +97,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </article>
 
           <article className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5">
-            <h3 className="text-lg font-semibold text-zinc-900">Shipped Feature Set</h3>
+            <h3 className="text-lg font-semibold text-zinc-900">{ui.projects.shippedTitle}</h3>
             <ul className="mt-3 space-y-2">
               {project.shippedFeatures.map((item) => (
                 <li key={item} className="text-sm leading-6 text-zinc-700">
@@ -105,8 +109,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">Implementation Examples</h2>
-          <p className="muted-text text-base">Reusable code surfaces mirror the style used in project previews and deeper technical pages.</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">{ui.projects.implementationTitle}</h2>
+          <p className="muted-text text-base">{ui.projects.implementationDescription}</p>
           <div className="space-y-4">
             {project.codeSamples.map((sample) => (
               <CodeBlock key={sample.title} title={sample.title} code={sample.code} />
@@ -115,7 +119,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </section>
 
         <section className="space-y-3 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <h2 className="text-xl font-semibold text-zinc-900">Current Focus</h2>
+          <h2 className="text-xl font-semibold text-zinc-900">{ui.projects.focusTitle}</h2>
           <ul className="space-y-2">
             {project.currentFocus.map((item) => (
               <li key={item} className="text-sm leading-6 text-zinc-700">
@@ -126,8 +130,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </section>
 
         <footer className="flex items-center gap-3 pt-4">
-          <Link href="/projects" className="button-secondary px-5 py-2.5 text-base">
-            ← Back to projects
+          <Link href="/projects" className="button-secondary w-full justify-center px-5 py-2.5 text-base sm:w-auto">
+            {ui.projects.backToProjects}
           </Link>
         </footer>
       </article>

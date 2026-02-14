@@ -46,7 +46,6 @@ async function sendWithResend(options: {
           <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:#cbd5e1;">You were contacted through your personal website contact form.</p>
         </div>
         <div style="padding:20px;">
-          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:#334155;">A new inquiry has been received and is ready for follow-up.</p>
           <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">
             <tbody>
               <tr>

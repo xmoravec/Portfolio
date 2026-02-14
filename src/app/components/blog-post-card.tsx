@@ -5,6 +5,7 @@ import { CodeBlock } from "./code-block";
 type BlogPostCardProps = {
   post: BlogPost;
   compact?: boolean;
+  readArticleLabel?: string;
 };
 
 function getPreviewCode(post: BlogPost) {
@@ -20,7 +21,7 @@ function getPreviewCode(post: BlogPost) {
 };`;
 }
 
-export function BlogPostCard({ post, compact = false }: BlogPostCardProps) {
+export function BlogPostCard({ post, compact = false, readArticleLabel = "Read article" }: BlogPostCardProps) {
   return (
     <article className="section-card space-y-4">
       <div className="space-y-2">
@@ -47,7 +48,7 @@ export function BlogPostCard({ post, compact = false }: BlogPostCardProps) {
       </div>
 
       <Link href={`/blog/${post.slug}`} className="inline-block text-sm font-medium text-blue-700 hover:underline">
-        Read article
+        {readArticleLabel}
       </Link>
     </article>
   );

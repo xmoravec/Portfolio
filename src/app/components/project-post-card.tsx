@@ -5,9 +5,10 @@ import { CodeBlock } from "./code-block";
 type ProjectPostCardProps = {
   project: ProjectPost;
   compact?: boolean;
+  openProjectDetailLabel?: string;
 };
 
-export function ProjectPostCard({ project, compact = false }: ProjectPostCardProps) {
+export function ProjectPostCard({ project, compact = false, openProjectDetailLabel = "Open project detail" }: ProjectPostCardProps) {
   return (
     <article className="section-card space-y-4">
       <div className="space-y-2">
@@ -35,7 +36,7 @@ export function ProjectPostCard({ project, compact = false }: ProjectPostCardPro
       </div>
 
       <Link href={`/projects/${project.slug}`} className="inline-block text-sm font-medium text-blue-700 hover:underline">
-        Open project detail
+        {openProjectDetailLabel}
       </Link>
     </article>
   );

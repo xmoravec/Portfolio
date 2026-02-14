@@ -1,8 +1,10 @@
 import { submitContactForm } from "./actions";
+import { defaultLocale } from "../content";
+import { getUiText } from "../i18n/ui-text";
 
-const contactWays = [
+const contactWayValues = [
   {
-    label: "Email",
+    key: "email",
     value: "trane128@gmail.com",
     href: "mailto:trane128@gmail.com",
     icon: (
@@ -13,7 +15,7 @@ const contactWays = [
     ),
   },
   {
-    label: "GitHub",
+    key: "github",
     value: "@xmoravec",
     href: "https://github.com/xmoravec",
     icon: (
@@ -23,7 +25,7 @@ const contactWays = [
     ),
   },
   {
-    label: "LinkedIn",
+    key: "linkedIn",
     value: "erik-moravec-4094641a1",
     href: "https://www.linkedin.com/in/erik-moravec-4094641a1/",
     icon: (
@@ -33,7 +35,7 @@ const contactWays = [
     ),
   },
   {
-    label: "Facebook",
+    key: "facebook",
     value: "erik.moravec",
     href: "https://www.facebook.com/erik.moravec/",
     icon: (
@@ -48,18 +50,23 @@ type ContactPageProps = {
   searchParams: Promise<{ status?: string; code?: string }>;
 };
 
-function getFeedback(status?: string, code?: string) {
+function getFeedback(
+  feedbackText: ReturnType<typeof getUiText>["contact"]["feedback"],
+  status?: string,
+  code?: string,
+) {
+
   if (status === "sent") {
     return {
       className: "rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800",
-      text: "Message sent successfully. Thanks for reaching out.",
+      text: feedbackText.sent,
     };
   }
 
   if (status === "queued") {
     return {
       className: "rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800",
-      text: "Message validated. Delivery service is not configured yet, so it was not emailed.",
+      text: feedbackText.queued,
     };
   }
 
@@ -67,34 +74,34 @@ function getFeedback(status?: string, code?: string) {
     if (code === "spam") {
       return {
         className: "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800",
-        text: "Submission blocked by anti-spam checks. Please try again.",
+        text: feedbackText.spam,
       };
     }
 
     if (code === "email") {
       return {
         className: "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800",
-        text: "Please use a valid email address.",
+        text: feedbackText.email,
       };
     }
 
     if (code === "message") {
       return {
         className: "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800",
-        text: "Please provide a message between 10 and 3000 characters.",
+        text: feedbackText.message,
       };
     }
 
     if (code === "delivery") {
       return {
         className: "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800",
-        text: "Validation passed, but delivery failed. Please retry shortly.",
+        text: feedbackText.delivery,
       };
     }
 
     return {
       className: "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800",
-      text: "Please fill in all fields before sending.",
+      text: feedbackText.missing,
     };
   }
 
@@ -102,32 +109,51 @@ function getFeedback(status?: string, code?: string) {
 }
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const ui = getUiText(defaultLocale);
   const { status, code } = await searchParams;
-  const feedback = getFeedback(status, code);
+  const feedback = getFeedback(ui.contact.feedback, status, code);
+  const contactWays = [
+    {
+      label: ui.contact.channels.email,
+      ...contactWayValues[0],
+    },
+    {
+      label: ui.contact.channels.github,
+      ...contactWayValues[1],
+    },
+    {
+      label: ui.contact.channels.linkedIn,
+      ...contactWayValues[2],
+    },
+    {
+      label: ui.contact.channels.facebook,
+      ...contactWayValues[3],
+    },
+  ];
 
   return (
     <main className="page-shell motion-shell">
       <section className="space-y-4">
-        <h1 className="section-title text-4xl sm:text-5xl">Let’s Connect</h1>
+        <h1 className="section-title text-3xl sm:text-5xl">{ui.contact.title}</h1>
         <p className="muted-text max-w-3xl text-base">
-          Reach out for collaboration, technical discussion, or project feedback. This form is wired with server-side validation, anti-spam checks, and optional Resend delivery.
+          {ui.contact.description}
         </p>
       </section>
 
       <section>
         <article className="section-card space-y-5 lg:p-9">
-          <h2 className="section-title">Send a Message</h2>
-          <p className="muted-text text-base">You can use this for project inquiries, freelance collaboration, or detailed technical questions.</p>
+          <h2 className="section-title">{ui.contact.formTitle}</h2>
+          <p className="muted-text text-base">{ui.contact.formDescription}</p>
           {feedback ? <p className={feedback.className}>{feedback.text}</p> : null}
           <form className="space-y-3" action={submitContactForm}>
             <input type="hidden" name="formStartedAt" value={Date.now().toString()} />
             <div className="hidden" aria-hidden>
-              <label htmlFor="company">Company</label>
+              <label htmlFor="company">{ui.contact.fields.honeypot}</label>
               <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
             </div>
             <div className="space-y-1">
               <label htmlFor="name" className="text-sm font-medium text-zinc-900">
-                Name
+                {ui.contact.fields.name}
               </label>
               <input
                 id="name"
@@ -137,12 +163,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 minLength={2}
                 maxLength={120}
                 className="w-full rounded-lg border border-zinc-300 px-4 py-3 text-base text-zinc-900 outline-none ring-blue-500 placeholder:text-zinc-400 focus:ring-2"
-                placeholder="Your name"
+                placeholder={ui.contact.placeholders.name}
               />
             </div>
             <div className="space-y-1">
               <label htmlFor="email" className="text-sm font-medium text-zinc-900">
-                Email
+                {ui.contact.fields.email}
               </label>
               <input
                 id="email"
@@ -151,12 +177,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 required
                 maxLength={180}
                 className="w-full rounded-lg border border-zinc-300 px-4 py-3 text-base text-zinc-900 outline-none ring-blue-500 placeholder:text-zinc-400 focus:ring-2"
-                placeholder="you@example.com"
+                placeholder={ui.contact.placeholders.email}
               />
             </div>
             <div className="space-y-1">
               <label htmlFor="message" className="text-sm font-medium text-zinc-900">
-                Message
+                {ui.contact.fields.message}
               </label>
               <textarea
                 id="message"
@@ -166,22 +192,22 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 minLength={10}
                 maxLength={3000}
                 className="w-full rounded-lg border border-zinc-300 px-4 py-3 text-base text-zinc-900 outline-none ring-blue-500 placeholder:text-zinc-400 focus:ring-2"
-                placeholder="Tell me about your project or question"
+                placeholder={ui.contact.placeholders.message}
               />
             </div>
-            <button type="submit" className="button-primary px-6 py-3 text-base">
-              Send Message
+            <button type="submit" className="button-primary w-full justify-center px-6 py-3 text-base sm:w-auto">
+              {ui.contact.submitLabel}
             </button>
           </form>
         </article>
       </section>
 
       <section className="space-y-4">
-        <h2 className="section-title">Contact Channels</h2>
+        <h2 className="section-title">{ui.contact.channelsTitle}</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {contactWays.map((item) => (
             <a
-              key={item.label}
+              key={item.key}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"

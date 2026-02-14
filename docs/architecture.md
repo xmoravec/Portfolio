@@ -32,6 +32,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - `src/app/layout.tsx`
   - Global shell (navigation + metadata)
   - `metadataBase` derived from `NEXT_PUBLIC_SITE_URL` fallback to localhost
+  - Locale-aware UI labels injected into shared navigation
 - `src/app/page.tsx`
   - Home page, fed by structured content model
 - `src/app/about/page.tsx`
@@ -51,18 +52,25 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - Server action for validation, anti-spam, and optional email delivery via Resend
 - `src/app/components/site-nav.tsx`
   - Path-aware navigation with conditional Home link on non-home routes
+  - Mobile hamburger drawer with overlay, close actions, and locale-driven labels
 - `src/app/components/code-block.tsx`
   - Reusable highlighted code display surface with compact/full variants
 - `src/app/components/blog-post-card.tsx`
   - Reusable blog preview card used in blog listing and homepage featured section
 - `src/app/components/project-post-card.tsx`
   - Reusable project preview card used in projects listing and homepage featured section
+- `src/app/i18n/ui-text.ts`
+  - Centralized locale dictionary for UI copy and feedback labels
+  - Current fallback strategy maps `sk` to EN text until translations are authored
 
 ### 3.2 Content Architecture
 
 - Home page content source: `src/app/content.ts`
   - Typed data model (`HomeContent`, locale-ready structure)
   - `defaultLocale` and locale map (currently EN + SK map to same content object)
+- Shared UI copy source: `src/app/i18n/ui-text.ts`
+  - Non-content UI strings (navigation, labels, feedback, CTA text, metadata fallbacks) are centralized
+  - Keeps code snippets and code sample blocks untouched by localization
 - Blog content source:
   - `src/content/blog/types.ts` for schema
   - `src/content/blog/index.ts` for index and lookup
@@ -118,11 +126,14 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 
 ### 5.2 Layout Behavior
 
-- Wider max container (`max-w-6xl` to `xl:max-w-7xl`) to reduce over-constrained center-column feel on large displays
+- Full-width mobile shell with breakpoint-based max-width constraints from `md` upward
+- Wider desktop max container (`max-w-6xl` to `xl:max-w-7xl`) to reduce over-constrained center-column feel on large displays
 - Home page uses mixed stacked + grid composition to improve horizontal rhythm
 - Home page includes horizontal featured presentation for both projects and blog content using shared card components with code previews
+- Mobile navigation uses a right-side drawer with backdrop to preserve readability on small screens
 - Photo gallery is a horizontal snap rail with modal enlargement on click
 - Gallery image delivery is tuned for Lighthouse performance: only first thumbnail is eager/high-priority, other thumbnails are lazy-loaded, and thumbnail/modal quality is explicitly controlled
+- Photo gallery cards and CTAs were adjusted for stronger mobile fit (wider cards, mobile-friendly button width behavior)
 
 ### 5.3 Motion System
 
@@ -170,6 +181,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 - Graceful behavior when `RESEND_API_KEY` is missing:
   - form validates
   - response shows `queued` status instead of crashing
+- Delivery payload includes both plain-text and lightweight HTML email bodies
+  - HTML format renders sender details and message content in a table layout
 
 ## 7) Environment Variables
 
@@ -199,15 +212,18 @@ Contact sender/recipient are currently defined in `src/app/contact/config.ts`.
 - Reusable highlighted code block UI for project preview/detail
 - Reusable blog/project featured cards with thumbnail-like code previews
 - Contact form validation + anti-spam + optional Resend integration
+- Contact emails include styled HTML summary plus plain-text fallback
 - Subtle motion layer with reduced-motion support
+- Mobile drawer navigation and full-width mobile shell behavior are implemented
+- UI-facing strings are centralized in locale dictionaries to support bilingual rollout
 
 ### In Progress / Planned
 
-- Full bilingual content split (EN/SK currently share one content object)
+- Full bilingual content split (EN/SK currently share one content object; translation values still pending)
 - Additional real blog posts
 - Potential migration to MDX if long-form writing expands
 - Stronger anti-abuse protections (rate limiting / abuse scoring)
-- Final content polish and production QA pass
+- Final content polish and production QA pass (manual Lighthouse/device verification)
 
 ## 10) Maintenance Rules
 

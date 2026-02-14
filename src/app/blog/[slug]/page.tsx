@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { defaultLocale } from "../../content";
+import { getUiText } from "../../i18n/ui-text";
 import { blogPosts, getBlogPostBySlug } from "../../../content/blog";
 import type { BlogBlock } from "../../../content/blog/types";
 
@@ -58,12 +60,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const ui = getUiText(defaultLocale);
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return {
-      title: "Post not found | Erik Moravec",
+      title: ui.metadata.postNotFoundTitle,
       robots: { index: false, follow: false },
     };
   }
@@ -87,6 +90,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const ui = getUiText(defaultLocale);
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -114,8 +118,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="space-y-4">{post.blocks.map((block) => renderBlock(block))}</div>
 
         <footer className="flex items-center gap-3 pt-4">
-          <Link href="/blog" className="button-secondary px-5 py-2.5 text-base">
-            ← Back to main blog page
+          <Link href="/blog" className="button-secondary w-full justify-center px-5 py-2.5 text-base sm:w-auto">
+            {ui.blog.backToBlog}
           </Link>
         </footer>
       </article>

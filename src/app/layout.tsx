@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { defaultLocale } from "./content";
 import { SiteNav } from "./components/site-nav";
+import { getUiText } from "./i18n/ui-text";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,10 +16,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const ui = getUiText(defaultLocale);
+
 export const metadata: Metadata = {
   title: "Erik Moravec",
-  description:
-    "Personal website with projects, writing, and current focus.",
+  description: ui.metadata.description,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 
@@ -36,7 +39,7 @@ export default function RootLayout({
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
               Erik Moravec
             </Link>
-            <SiteNav />
+            <SiteNav labels={ui.nav} />
           </div>
         </header>
         {children}
