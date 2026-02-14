@@ -87,7 +87,7 @@ export default async function BlogPostPage({ searchParams }: BlogPostPageProps) 
 
         <footer className="pt-3">
           <Link href="/blog" className="button-secondary">
-            Back to Blog
+            ← Back to main blog page
           </Link>
         </footer>
       </article>

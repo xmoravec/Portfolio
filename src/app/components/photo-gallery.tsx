@@ -35,35 +35,31 @@ export function PhotoGallery({ items }: PhotoGalleryProps) {
 
   return (
     <>
-      <div className="grid gap-4 md:grid-cols-2">
-        {items.map((photo, index) => {
-          const isLandscape = index === items.length - 1;
-
-          return (
-            <button
-              key={photo.src}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={`section-card group overflow-hidden p-0 text-left ${isLandscape ? "md:col-span-2" : ""}`}
-              aria-label={`Open photo details for ${photo.title}`}
-            >
-              <div className={`relative w-full ${isLandscape ? "aspect-video" : "aspect-4/5"}`}>
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                  sizes={isLandscape ? "100vw" : "(max-width: 768px) 100vw, 50vw"}
-                  priority
-                />
-              </div>
-              <figcaption className="space-y-1 p-4">
-                <p className="text-sm font-medium text-zinc-900">{photo.title}</p>
-                <p className="text-xs text-zinc-500">{photo.subtitle}</p>
-              </figcaption>
-            </button>
-          );
-        })}
+      <div className="horizontal-scroll">
+        {items.map((photo, index) => (
+          <button
+            key={photo.src}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            className="section-card group w-[72vw] max-w-105 shrink-0 snap-start overflow-hidden p-0 text-left md:w-[44vw] lg:w-[30vw]"
+            aria-label={`Open photo details for ${photo.title}`}
+          >
+            <div className="relative aspect-5/4 w-full bg-zinc-100">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                sizes="(max-width: 768px) 72vw, (max-width: 1024px) 44vw, 30vw"
+                priority
+              />
+            </div>
+            <figcaption className="space-y-1 p-4">
+              <p className="text-sm font-medium text-zinc-900">{photo.title}</p>
+              <p className="text-xs text-zinc-500">{photo.subtitle}</p>
+            </figcaption>
+          </button>
+        ))}
       </div>
 
       {activePhoto && (

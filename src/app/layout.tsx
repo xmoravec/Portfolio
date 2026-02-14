@@ -37,11 +37,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur">
-          <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-3 sm:px-10">
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-3 sm:px-10">
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
               Erik Moravec
             </Link>
-            <nav aria-label="Primary" className="flex flex-wrap items-center justify-end gap-4 text-sm text-zinc-600">
+            <nav aria-label="Primary" className="ml-10 flex flex-wrap items-center justify-end gap-6 text-sm text-zinc-600 sm:ml-14">
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href} className="transition hover:text-blue-700">
                   {item.label}

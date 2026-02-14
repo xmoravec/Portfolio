@@ -20,10 +20,10 @@ export default function AboutPage() {
         </div>
         <div className="space-y-3">
           <p className="muted-text">
-            I enjoy building practical software with clear communication and thoughtful execution.
+            I build software with a bias toward clarity: understandable architecture, honest trade-offs, and execution that can be maintained over time.
           </p>
           <p className="muted-text">
-            This site tracks my work, writing, and current focus while staying simple and human.
+            This website is both portfolio and working notebook, combining selected project outcomes with development logs from active iterations.
           </p>
         </div>
       </section>
@@ -31,10 +31,10 @@ export default function AboutPage() {
       <section id="now" className="section-card space-y-4 scroll-mt-24">
         <h2 className="section-title">Now</h2>
         <p className="muted-text">
-          I am currently refining this website, improving visual polish, and preparing a small homepage photo slideshow.
+          I am currently pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish.
         </p>
         <p className="muted-text">
-          I am also documenting selected projects in a clearer case-study style with practical implementation notes.
+          In parallel, I am documenting project work in a more technical case-study style that explains architecture choices, constraints, and implementation details.
         </p>
         <p className="text-xs text-zinc-500">Last updated: 2026-02-14</p>
       </section>

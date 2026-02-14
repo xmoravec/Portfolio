@@ -8,7 +8,7 @@ export default function BlogPage() {
         <span className="pill">Blog</span>
         <h1 className="section-title text-4xl sm:text-5xl">Writing and Notes</h1>
         <p className="muted-text max-w-2xl">
-          Short essays about building products, maintaining momentum, and learning in public.
+          Technical snapshots and decision logs from building this portfolio and related software work.
         </p>
       </section>
 
@@ -18,7 +18,11 @@ export default function BlogPage() {
             <p className="text-xs text-zinc-500">
               {post.date} · {post.readTime}
             </p>
-            <h2 className="text-xl font-semibold text-zinc-900">{post.title}</h2>
+            <h2 className="text-xl font-semibold text-zinc-900">
+              <Link href={`/blog/post?slug=${post.slug}`} className="transition hover:text-zinc-700 hover:underline">
+                {post.title}
+              </Link>
+            </h2>
             <p className="muted-text">{post.summary}</p>
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (

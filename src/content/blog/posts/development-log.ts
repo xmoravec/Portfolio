@@ -4,7 +4,7 @@ export const developmentLogPost: BlogPost = {
   slug: "portfolio-development-log",
   title: "Portfolio Engineering Log: Current Technical Snapshot",
   date: "2026-02-14",
-  readTime: "9 min read",
+  readTime: "2 min read",
   summary:
     "A technical snapshot of the current Next.js portfolio: architecture, content model, shipped routes, and concrete gaps still in progress.",
   tags: ["Next.js", "Tailwind", "Architecture", "Dev Log"],

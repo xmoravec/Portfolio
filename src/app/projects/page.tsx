@@ -5,7 +5,7 @@ const projectCards = [
     title: "Personal Portfolio",
     status: "Live",
     summary:
-      "A static-first personal website focused on performance, storytelling, and simple maintenance.",
+      "A static-first personal website focused on speed, maintainability, and transparent technical storytelling.",
     highlights: ["App Router", "Tailwind v4", "Locale-ready content model"],
     stackNotes: [
       "Next.js keeps routing and rendering predictable.",
@@ -17,7 +17,7 @@ const projectCards = [
     title: "Realtime Session Notes",
     status: "Prototype",
     summary:
-      "An experiment for capturing team decisions in real time with structured context blocks.",
+      "A collaboration experiment for capturing live decisions with structured context and durable timeline history.",
     highlights: ["WebSocket events", "Optimistic UI", "Conflict-safe merges"],
     stackNotes: [
       "WebSocket events keep collaboration immediate.",
@@ -29,7 +29,7 @@ const projectCards = [
     title: "Developer Workflow Toolkit",
     status: "Case Study",
     summary:
-      "Scripts and patterns that reduce repetitive setup and keep delivery consistent.",
+      "Scripts, checklists, and conventions that reduce repetitive setup and improve release consistency.",
     highlights: ["Automated checks", "Release checklist", "Portable scripts"],
     stackNotes: [
       "Automation catches errors before release.",
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
         <span className="pill">Projects</span>
         <h1 className="section-title text-4xl sm:text-5xl">Selected Work</h1>
         <p className="muted-text max-w-2xl">
-          A focused list of projects with practical outcomes. Full case studies will be expanded over time.
+          A focused set of projects with practical outcomes. Full case studies will keep expanding with implementation notes and measurable impact.
         </p>
       </section>
 
@@ -91,7 +91,7 @@ export default function ProjectsPage() {
 
       <section className="section-card space-y-3">
         <h2 className="section-title">Keep exploring</h2>
-        <p className="muted-text">For personal updates and current focus, open the About page.</p>
+        <p className="muted-text">For current priorities and ongoing site updates, continue to the About page.</p>
         <Link href="/about" className="button-secondary">
           Open About
         </Link>

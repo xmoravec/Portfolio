@@ -23,7 +23,7 @@ export default function ContactPage() {
         <span className="pill">Contact</span>
         <h1 className="section-title text-4xl sm:text-5xl">Let’s Connect</h1>
         <p className="muted-text max-w-2xl">
-          Reach out for collaboration, project discussion, or just to say hi.
+          Reach out for collaboration, technical discussion, or project feedback.
         </p>
       </section>
 
@@ -48,7 +48,7 @@ export default function ContactPage() {
 
         <article className="section-card space-y-4">
           <h2 className="section-title">Send a Message</h2>
-          <p className="muted-text">This is a first UI version. Form backend wiring can be added in the next step.</p>
+          <p className="muted-text">This is the current UI layer. Backend delivery, validation, and anti-spam wiring are planned next.</p>
           <form className="space-y-3" action="#" method="post">
             <div className="space-y-1">
               <label htmlFor="name" className="text-sm font-medium text-zinc-900">
