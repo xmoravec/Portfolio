@@ -42,7 +42,7 @@ export const skUiText: UiText = {
     nowFirst:
       "Aktívne pracujem ako kontraktor a freelancer. Spolupracujem so spoločnosťami ako InfoBeans a DHL IT Services na návrhu a dodávke komplexných softvérových riešení. Zároveň pracujem s civilnými aj business klientmi na personalizovaných webových a softvérových produktoch.",
     nowSecond:
-      "Vo voľnom čase posúvam tento web z rozpracovaného stavu na takmer finálny základ – s lepším layoutom, kvalitnejším textom a lepším UX. Paralelne dokumentujem prácu na projektoch v blogu a plánujem ďalšiu cestu.",
+      "Vo voľnom čase posúvam tento web z rozpracovaného stavu na takmer finálny základ s lepším layoutom, kvalitnejším textom a lepším UX. Paralelne dokumentujem prácu na projektoch v blogu a plánujem ďalšiu cestu.",
     experienceTitle: "Časová os skúseností",
     experienceDescription:
       "Zjednodušený chronologický prehľad rolí, ktoré formovali môj inžiniersky prístup.",
