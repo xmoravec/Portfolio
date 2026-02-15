@@ -1,36 +1,33 @@
-import Link from "next/link";
+import { BlogPostCard } from "../components/blog-post-card";
+import { defaultLocale } from "../content";
+import { getUiText } from "../i18n/ui-text";
 import { blogPosts } from "../../content/blog";
 
 export default function BlogPage() {
+  const ui = getUiText(defaultLocale);
+
   return (
-    <main className="page-shell">
+    <main className="page-shell motion-shell">
       <section className="space-y-4">
-        <span className="pill">Blog</span>
-        <h1 className="section-title text-4xl sm:text-5xl">Writing and Notes</h1>
+        <h1 className="section-title text-3xl sm:text-5xl">{ui.blog.pageTitle}</h1>
         <p className="muted-text max-w-2xl">
-          Short essays about building products, maintaining momentum, and learning in public.
+          {ui.blog.pageDescription}
         </p>
+        <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <p className="text-sm font-medium text-zinc-900">{ui.blog.timelineTitle}</p>
+          <p className="mt-1 text-sm text-zinc-600">{ui.blog.timelineDescription}</p>
+        </div>
       </section>
 
       <section className="space-y-3">
         {blogPosts.map((post) => (
-          <article key={post.slug} className="section-card space-y-2">
-            <p className="text-xs text-zinc-500">
-              {post.date} · {post.readTime}
-            </p>
-            <h2 className="text-xl font-semibold text-zinc-900">{post.title}</h2>
-            <p className="muted-text">{post.summary}</p>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span key={tag} className="pill">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <Link href={`/blog/post?slug=${post.slug}`} className="inline-block text-sm font-medium text-blue-700 hover:underline">
-              Read article
-            </Link>
-          </article>
+          <BlogPostCard
+            key={post.slug}
+            post={post}
+            compact
+            readArticleLabel={ui.blog.readArticle}
+            publishedLabel={ui.blog.publishedLabel}
+          />
         ))}
       </section>
     </main>

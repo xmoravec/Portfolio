@@ -55,17 +55,17 @@ export const defaultLocale: Locale = "en";
 const enHomeContent: HomeContent = {
     hero: {
       eyebrow: "Personal Site",
-      title: "Hi, I’m Erik. I build, learn, and share what I’m exploring.",
+      title: "Hi, I’m Erik. I design, build, and document software that stays practical.",
       description:
-        "Welcome to my corner of the internet. This is where I keep personal notes, current focus, and selected work in one place.",
+        "This site is my working portfolio: selected projects, engineering notes, and the current direction of what I am building right now.",
       primaryCta: { label: "About Me", href: "/about" },
       secondaryCta: { label: "What I’m Doing Now", href: "/about#now" },
     },
     intro: {
       title: "A bit about me",
       paragraphs: [
-        "I enjoy turning rough ideas into clean and usable products. I care about practical outcomes, readable code, and steady progress.",
-        "Outside of project work, I like writing short reflections on process, decisions, and things I’m currently learning.",
+        "I enjoy turning rough ideas into reliable, understandable products. My default approach is to optimize for clarity first, then iterate on depth.",
+        "Alongside project work, I write development logs that capture architecture decisions, trade-offs, and what is still unfinished.",
       ],
     },
     photos: {
@@ -100,31 +100,25 @@ const enHomeContent: HomeContent = {
     now: {
       title: "Now",
       summary:
-        "Currently refining this personal site and preparing a future photo slideshow section for the homepage.",
+        "Currently refining this portfolio into a production-ready baseline: stronger content quality, cleaner UX, and tighter implementation details.",
       lastUpdated: "2026-02-14",
-      cta: { label: "Read More", href: "/about#now" },
+      cta: { label: "Read current focus", href: "/about#now" },
     },
     writing: {
-      title: "Latest Writing",
+      title: "Engineering Notes",
       posts: [
         {
-          title: "Development Log: Building This Personal Website",
-          href: "/blog/post?slug=portfolio-development-log",
+          title: "Portfolio Engineering Log: Current Technical Snapshot",
+          href: "/blog/portfolio-development-log",
           publishedAt: "2026-02-14",
-          summary: "A practical log of architecture, styling decisions, and iterative build steps.",
-        },
-        {
-          title: "Notes on Better Focus",
-          href: "/blog/post?slug=notes-on-better-focus",
-          publishedAt: "2026-01-30",
-          summary: "Simple constraints I use to reduce context switching.",
+          summary: "Architecture, stack decisions, shipped functionality, and open engineering tasks from the current codebase.",
         },
       ],
     },
     explore: {
       title: "Explore More",
       description:
-        "Project details and technical notes live on the Projects page so this homepage stays personal and simple.",
+        "Projects hold implementation-facing notes and case-study context, while the blog tracks development state over time.",
       links: [
         { label: "Projects", href: "/projects" },
         { label: "Blog", href: "/blog" },
@@ -132,8 +126,8 @@ const enHomeContent: HomeContent = {
     },
     contact: {
       title: "Let’s connect",
-      description: "If you want to reach out, send me a message through the contact page.",
-      cta: { label: "Contact", href: "/contact" },
+      description: "Open to collaboration, product conversations, and thoughtful feedback.",
+      cta: { label: "Open contact", href: "/contact" },
     },
     footer: {
       githubLabel: "GitHub",

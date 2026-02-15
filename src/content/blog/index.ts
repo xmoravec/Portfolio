@@ -1,8 +1,8 @@
 import type { BlogPost } from "./types";
-import { developmentLogPost } from "./posts/development-log";
-import { focusNotesPost } from "./posts/focus-notes";
+import { developmentLogPost } from "./posts/initial-development-log";
+import { milestoneUpdate20260215Post } from "./posts/milestone-update-2026-02-15";
 
-export const blogPosts: BlogPost[] = [developmentLogPost, focusNotesPost].sort(
+export const blogPosts: BlogPost[] = [milestoneUpdate20260215Post, developmentLogPost].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 
