@@ -128,19 +128,23 @@ const enUiText: UiText = {
     title: "About Me",
     portraitAlt: "Portrait",
     introFirst:
-      "I build software with a bias toward clarity: understandable architecture, honest trade-offs, and execution that can be maintained over time.",
+      "I build software with an emphasis on code quality, readability and choosing the right tools for the right job. My philosophy is to not stick to specific technologies, but to be pragmatic and open-minded about using whatever best serves the project and its users.\
+      On a practical level this allows me to gather a wide range of experience across different programming languages and technological stacks. On a personal level, learning and trying new things is what makes technology fun for me!\
+      On a pragmatic level, I believe this is made much more accesible and necessary in the new age of AI and Vibecoding.",
     introSecond:
-      "This website is both portfolio and working notebook, combining selected project outcomes with development logs from active iterations.",
+      "This website is both my portfolio and a personal working notebook.",
     nowTitle: "Now",
     nowFirst:
-      "I am currently pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish.",
+      "I am actively working as an external contractor and freelancer. I cooperate with various big companies like InfoBeans and DHL IT Services on complex software design and delivery.\
+       I also work with other civilian and business clients to develop personalized web and software solutions.",
     nowSecond:
-      "In parallel, I am documenting project work in a more technical case-study style that explains architecture choices, constraints, and implementation details.",
+      "In my free time, I am currently pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish.\
+       In parallel, I am documenting the project work in the blog and planning my next trip!",
   },
   blog: {
-    pageTitle: "Writing and Notes",
+    pageTitle: "Blog",
     pageDescription:
-      "Technical snapshots and decision logs from building this portfolio and related software work.",
+      "I love writing. Read about my thoughts, technical deep-dives and adventures.",
     timelineTitle: "Development Timeline",
     timelineDescription:
       "Current sequence: initial baseline (14-02-2026), then a later-stage milestone update (15-02-2026).",
@@ -151,7 +155,7 @@ const enUiText: UiText = {
   projects: {
     pageTitle: "Projects",
     pageDescription:
-      "Real project write-ups only. Each entry opens a technical detail page with architecture notes, shipped features, and implementation examples.",
+      "Real project write-ups. Each article opens up about the technical details, architecture notes, shipped features, and code snippet examples.",
     openProjectDetail: "Open project detail",
     backToProjects: "← Back to projects",
     intentTitle: "Project Intent",
@@ -169,9 +173,9 @@ const enUiText: UiText = {
     closeViewerAria: "Close photo viewer",
   },
   contact: {
-    title: "Let’s Connect",
+    title: "Contact Me",
     description:
-      "Reach out for collaboration, technical discussion, or project feedback. This form is wired with server-side validation, anti-spam checks, and optional Resend delivery.",
+      "Reach out for collaboration, technical discussion, project feedback or friendly conversation. You can use the form below or contact me through the channels listed.",
     formTitle: "Send a Message",
     formDescription:
       "You can use this for project inquiries, freelance collaboration, or detailed technical questions.",
@@ -185,7 +189,7 @@ const enUiText: UiText = {
     placeholders: {
       name: "Your name",
       email: "you@example.com",
-      message: "Tell me about your project or question",
+      message: "Tell me what your heart desires",
     },
     submitLabel: "Send Message",
     feedback: {

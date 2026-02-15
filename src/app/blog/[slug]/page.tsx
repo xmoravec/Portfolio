@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BookOpen } from "lucide-react";
 import { defaultLocale } from "../../content";
 import { getUiText } from "../../i18n/ui-text";
 import { CodeBlock } from "../../components/code-block";
@@ -113,6 +114,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <main className="page-shell motion-shell">
       <article className="section-card space-y-8">
         <header className="space-y-3">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100"
+          >
+            <BookOpen className="h-3.5 w-3.5" aria-hidden />
+            Blog
+          </Link>
           <h1 className="section-title text-3xl sm:text-4xl">{post.title}</h1>
           <p className="text-sm text-zinc-500">
             {ui.blog.publishedLabel} {dateFormatter.format(new Date(`${post.date}T00:00:00`))} · {post.readTime}

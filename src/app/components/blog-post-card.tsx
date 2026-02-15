@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookOpen } from "lucide-react";
 import type { BlogPost } from "../../content/blog/types";
 import { CodeBlock } from "./code-block";
 
@@ -41,6 +42,10 @@ export function BlogPostCard({
   return (
     <article className="section-card space-y-4">
       <div className="space-y-2">
+        <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+          <BookOpen className="h-3.5 w-3.5" aria-hidden />
+          Blog
+        </span>
         <p className="text-xs text-zinc-500">
           {publishedLabel} {formatDate(post.date)} · {post.readTime}
         </p>

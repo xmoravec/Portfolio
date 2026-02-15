@@ -118,16 +118,16 @@ const enHomeContent: HomeContent = {
     explore: {
       title: "Explore More",
       description:
-        "Projects hold implementation-facing notes and case-study context, while the blog tracks development state over time.",
+        "Projects hold implementation-facing notes, elaborations over technological choices and case-study deep dives. The blog writes about everything that interests me from programming to traveling.",
       links: [
-        { label: "Projects", href: "/projects" },
-        { label: "Blog", href: "/blog" },
+        { label: "Explore Projects", href: "/projects" },
+        { label: "Read Blog", href: "/blog" },
       ],
     },
     contact: {
       title: "Let’s connect",
-      description: "Open to collaboration, product conversations, and thoughtful feedback.",
-      cta: { label: "Open contact", href: "/contact" },
+      description: "Open to collaboration, business or just friendly conversations, and thoughtful feedback.",
+      cta: { label: "Contact Me", href: "/contact" },
     },
     footer: {
       githubLabel: "GitHub",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Wrench } from "lucide-react";
 import { defaultLocale } from "../../content";
 import { getUiText } from "../../i18n/ui-text";
 import { CodeBlock } from "../../components/code-block";
@@ -63,6 +64,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     <main className="page-shell motion-shell">
       <article className="section-card space-y-8">
         <header className="space-y-3">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700 transition hover:bg-amber-100"
+          >
+            <Wrench className="h-3.5 w-3.5" aria-hidden />
+            Project
+          </Link>
           <h1 className="section-title text-3xl sm:text-4xl">{project.title}</h1>
           <p className="text-sm text-zinc-500">
             {dateFormatter.format(new Date(`${project.date}T00:00:00`))} · {project.readTime}

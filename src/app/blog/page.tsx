@@ -13,10 +13,6 @@ export default function BlogPage() {
         <p className="muted-text max-w-2xl">
           {ui.blog.pageDescription}
         </p>
-        <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3">
-          <p className="text-sm font-medium text-zinc-900">{ui.blog.timelineTitle}</p>
-          <p className="mt-1 text-sm text-zinc-600">{ui.blog.timelineDescription}</p>
-        </div>
       </section>
 
       <section className="space-y-3">
