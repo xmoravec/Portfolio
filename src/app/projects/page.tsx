@@ -1,10 +1,11 @@
 import { ProjectPostCard } from "../components/project-post-card";
-import { defaultLocale } from "../content";
-import { getUiText } from "../i18n/ui-text";
+import { getUiText } from "../i18n";
+import { getRequestLocale } from "../i18n/locale.server";
 import { projectPosts } from "../../content/projects";
 
-export default function ProjectsPage() {
-  const ui = getUiText(defaultLocale);
+export default async function ProjectsPage() {
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
 
   return (
     <main className="page-shell motion-shell">
@@ -17,7 +18,12 @@ export default function ProjectsPage() {
 
       <section className="space-y-4">
         {projectPosts.map((project) => (
-          <ProjectPostCard key={project.slug} project={project} openProjectDetailLabel={ui.projects.openProjectDetail} />
+          <ProjectPostCard
+            key={project.slug}
+            project={project}
+            openProjectDetailLabel={ui.projects.openProjectDetail}
+            badgeLabel={ui.projects.badgeLabel}
+          />
         ))}
       </section>
     </main>

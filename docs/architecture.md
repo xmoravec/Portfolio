@@ -1,6 +1,6 @@
 # Portfolio Architecture
 
-Last updated: 2026-02-14
+Last updated: 2026-02-15
 
 This document is the technical source of truth for this portfolio codebase. Keep it updated whenever architecture, routing, content flow, integrations, or deployment assumptions change.
 
@@ -15,13 +15,14 @@ This document is the technical source of truth for this portfolio codebase. Keep
 ## 2) Technology Stack
 
 - **Next.js** `16.1.6`
-- **React / React DOM** `19.2.3`
+- **React / React DOM** `19.2.4`
 - **TypeScript** `^5` with strict mode
 - **Tailwind CSS** `^4` via `@tailwindcss/postcss`
 - **ESLint** `^9` with `eslint-config-next` core-web-vitals and TypeScript presets
 - **Fonts**: `next/font` with Geist + Geist Mono
 - **Image optimization**: `next/image`
 - **Image delivery tuning**: AVIF/WebP output enabled in Next config, plus responsive sizing/quality strategy on gallery images
+- **Monitoring**: `@vercel/analytics` mounted globally in `layout.tsx`
 
 No database and no CMS are used currently. Content is authored in TypeScript source files and bundled at build-time.
 
@@ -33,6 +34,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - Global shell (navigation + metadata)
   - `metadataBase` derived from `NEXT_PUBLIC_SITE_URL` fallback to localhost
   - Locale-aware UI labels injected into shared navigation
+  - Global Vercel Analytics client mounted once for route-level pageview tracking
 - `src/app/page.tsx`
   - Home page, fed by structured content model
 - `src/app/about/page.tsx`
@@ -53,8 +55,10 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - `src/app/components/site-nav.tsx`
   - Path-aware navigation with conditional Home link on non-home routes
   - Mobile hamburger drawer with overlay, close actions, and locale-driven labels
+  - Icons use `lucide-react` instead of inline SVG path markup
 - `src/app/components/code-block.tsx`
   - Reusable highlighted code display surface with compact/full variants
+  - Built on `react-syntax-highlighter` with parameterized options (language, line numbers, wrapping, copy button)
 - `src/app/components/blog-post-card.tsx`
   - Reusable blog preview card used in blog listing and homepage featured section
 - `src/app/components/project-post-card.tsx`
@@ -74,11 +78,16 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - Blog content source:
   - `src/content/blog/types.ts` for schema
   - `src/content/blog/index.ts` for index and lookup
-  - `src/content/blog/posts/development-log.ts` for actual post content
+  - `src/content/blog/posts/*` for actual post content modules
 - Project content source:
   - `src/content/projects/types.ts` for schema
   - `src/content/projects/index.ts` for index and lookup
-  - `src/content/projects/portfolio-project.ts` for current real project entry
+  - `src/content/projects/acquamarea-project.ts`, `src/content/projects/portfolio-project.ts`, and `src/content/projects/university-engineering-labs-project.ts` for current project entries
+
+- Blog content source includes:
+  - `src/content/blog/posts/initial-development-log.ts`
+  - `src/content/blog/posts/milestone-update-2026-02-15.ts`
+  - `src/content/blog/posts/university-projects-reflection-2026-02-15.ts`
 
 The blog rendering model is block-based typed content (`heading`, `paragraph`, `quote`, `list`, `code`) rendered directly by route component logic. Projects use slug-based routing too, but the detail page is DOM-first and can mix richer layouts and custom UI sections without being constrained to a text block schema.
 
@@ -96,6 +105,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 ### 4.2 Metadata
 
 - Global metadata configured in `layout.tsx`
+- Global viewport metadata is explicitly configured in `layout.tsx` (`width=device-width`, `initialScale=1`, `viewportFit=cover`) to avoid real-device mobile viewport mismatch/phantom horizontal canvas behavior
 - Post-level metadata generated in `blog/[slug]/page.tsx`
   - `title`
   - `description`
@@ -119,9 +129,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
   - `pill`
   - `horizontal-scroll`
 - Reusable code display component in `src/app/components/code-block.tsx`
-  - Colorized token rendering
-  - Window-style header accents
-  - Line numbers and gradient surface
+  - Library-based syntax highlighting via `react-syntax-highlighter`
+  - Header accents, optional line numbers, optional copy button, and gradient surface
   - Used in project previews and detail examples
 
 ### 5.2 Layout Behavior
@@ -134,6 +143,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 - Photo gallery is a horizontal snap rail with modal enlargement on click
 - Gallery image delivery is tuned for Lighthouse performance: only first thumbnail is eager/high-priority, other thumbnails are lazy-loaded, and thumbnail/modal quality is explicitly controlled
 - Photo gallery cards and CTAs were adjusted for stronger mobile fit (wider cards, mobile-friendly button width behavior)
+- Horizontal overflow hardening is applied at the shell level (`html/body` + `.page-shell`) and on reusable card surfaces (`min-w-0`) to prevent long-content/grid overflow from expanding document width on mobile
+- Drawer and gallery widths use bounded `min()` viewport values to avoid viewport-width overshoot edge-cases on real devices
 
 ### 5.3 Motion System
 
@@ -149,6 +160,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 
 - File: `src/app/contact/page.tsx`
 - Dominant full-width form card with status messaging
+- Hidden timestamp field (`formStartedAt`) is stamped at render time for anti-spam timing checks
 - Social/contact cards placed below the form
 - Contact channels include:
   - Email (`trane128@gmail.com`)
@@ -167,9 +179,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
     - hidden honeypot field (`company`)
     - timing check (`formStartedAt` too fast submit)
     - suspicious short-link message pattern
-- Logging:
-  - Logs incoming submission payload and validation context
-  - Logs spam-block and delivery outcomes
+- No server-side request logging is emitted from this action
 
 ### 6.3 Delivery Integration (Resend)
 
@@ -198,6 +208,7 @@ Contact sender/recipient are currently defined in `src/app/contact/config.ts`.
 - Intended deployment target: Vercel
 - Pages are mostly static/server-rendered by Next runtime as needed
 - Contact form server action runs in serverless environment
+- Vercel Analytics is enabled through the globally mounted `Analytics` component in `layout.tsx`
 - Production readiness depends on setting required env vars in Vercel project settings
 
 ## 9) Current State Summary
@@ -213,9 +224,11 @@ Contact sender/recipient are currently defined in `src/app/contact/config.ts`.
 - Reusable blog/project featured cards with thumbnail-like code previews
 - Contact form validation + anti-spam + optional Resend integration
 - Contact emails include styled HTML summary plus plain-text fallback
+- Date display now uses inline `Intl.DateTimeFormat` at render sites
 - Subtle motion layer with reduced-motion support
 - Mobile drawer navigation and full-width mobile shell behavior are implemented
 - UI-facing strings are centralized in locale dictionaries to support bilingual rollout
+- Vercel Analytics integration is active for deployed traffic monitoring
 
 ### In Progress / Planned
 

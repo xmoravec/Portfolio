@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X } from "lucide-react";
+import type { Locale } from "../content";
+import { localeCookieName } from "../i18n/locale.shared";
 
 type SiteNavProps = {
+  currentLocale: Locale;
   labels: {
     primaryAria: string;
     home: string;
@@ -16,13 +20,26 @@ type SiteNavProps = {
     openMenuAria: string;
     closeMenuAria: string;
     mobileNavAria: string;
+    localeSwitcherAria: string;
+    localeEnLabel: string;
+    localeSkLabel: string;
   };
 };
 
-export function SiteNav({ labels }: SiteNavProps) {
+export function SiteNav({ labels, currentLocale }: SiteNavProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const showHome = pathname !== "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function updateLocale(nextLocale: Locale) {
+    if (nextLocale === currentLocale) {
+      return;
+    }
+
+    document.cookie = `${localeCookieName}=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+    router.refresh();
+  }
 
   const navItems = [
     { label: labels.projects, href: "/projects" },
@@ -30,10 +47,6 @@ export function SiteNav({ labels }: SiteNavProps) {
     { label: labels.about, href: "/about" },
     { label: labels.contact, href: "/contact" },
   ];
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -63,6 +76,38 @@ export function SiteNav({ labels }: SiteNavProps) {
             {item.label}
           </Link>
         ))}
+        <div
+          className="relative inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 p-0.5"
+          role="group"
+          aria-label={labels.localeSwitcherAria}
+        >
+          <span
+            className={`absolute bottom-0.5 top-0.5 w-9 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+              currentLocale === "en" ? "translate-x-0" : "translate-x-9"
+            }`}
+            aria-hidden
+          />
+          <button
+            type="button"
+            onClick={() => updateLocale("en")}
+            className={`relative z-10 inline-flex h-8 w-9 items-center justify-center rounded-full text-xs font-semibold transition ${
+              currentLocale === "en" ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-700"
+            }`}
+            aria-pressed={currentLocale === "en"}
+          >
+            {labels.localeEnLabel}
+          </button>
+          <button
+            type="button"
+            onClick={() => updateLocale("sk")}
+            className={`relative z-10 inline-flex h-8 w-9 items-center justify-center rounded-full text-xs font-semibold transition ${
+              currentLocale === "sk" ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-700"
+            }`}
+            aria-pressed={currentLocale === "sk"}
+          >
+            {labels.localeSkLabel}
+          </button>
+        </div>
       </nav>
 
       <button
@@ -74,15 +119,11 @@ export function SiteNav({ labels }: SiteNavProps) {
         onClick={() => setIsMenuOpen(true)}
       >
         <span className="sr-only">{labels.openMenuAria}</span>
-        <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-          <path d="M4 7h16" />
-          <path d="M4 12h16" />
-          <path d="M4 17h16" />
-        </svg>
+        <Menu className="h-5 w-5" aria-hidden="true" />
       </button>
 
-      {isMenuOpen ? (
-          <div className="fixed inset-0 z-70 isolate md:hidden" role="presentation">
+          {isMenuOpen ? (
+            <div className="fixed inset-0 z-50 isolate overflow-x-hidden md:hidden" role="presentation">
           <button
             type="button"
               className="absolute inset-0 z-10 bg-zinc-950/55 backdrop-blur-[2px]"
@@ -94,7 +135,7 @@ export function SiteNav({ labels }: SiteNavProps) {
             role="dialog"
             aria-modal="true"
             aria-label={labels.mobileNavAria}
-              className="fixed inset-y-0 right-0 z-20 flex w-[88vw] max-w-sm flex-col overflow-y-auto border-l border-zinc-700 bg-zinc-900/95 p-5 text-zinc-100 shadow-2xl shadow-black/40 supports-backdrop-filter:bg-zinc-900/90"
+              className="fixed inset-y-0 right-0 z-20 flex w-[min(88vw,24rem)] max-w-sm flex-col overflow-y-auto border-l border-zinc-700 bg-zinc-900/95 p-5 text-zinc-100 shadow-2xl shadow-black/40 supports-backdrop-filter:bg-zinc-900/90"
           >
             <div className="mb-6 flex items-center justify-between">
               <p className="text-sm font-semibold text-white">{labels.menu}</p>
@@ -104,10 +145,7 @@ export function SiteNav({ labels }: SiteNavProps) {
                 aria-label={labels.closeMenuAria}
                 onClick={() => setIsMenuOpen(false)}
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M6 6l12 12" />
-                  <path d="M18 6l-12 12" />
-                </svg>
+                <X className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
 
@@ -131,6 +169,36 @@ export function SiteNav({ labels }: SiteNavProps) {
                   {item.label}
                 </Link>
               ))}
+
+              <div className="mt-2 rounded-xl border border-zinc-700 bg-zinc-800/70 p-2">
+                <p className="mb-2 text-xs uppercase tracking-wide text-zinc-400">{labels.localeSwitcherAria}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => updateLocale("en")}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      currentLocale === "en"
+                        ? "bg-white text-zinc-900"
+                        : "bg-zinc-900 text-zinc-300 hover:bg-zinc-700 hover:text-white"
+                    }`}
+                    aria-pressed={currentLocale === "en"}
+                  >
+                    {labels.localeEnLabel}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateLocale("sk")}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      currentLocale === "sk"
+                        ? "bg-white text-zinc-900"
+                        : "bg-zinc-900 text-zinc-300 hover:bg-zinc-700 hover:text-white"
+                    }`}
+                    aria-pressed={currentLocale === "sk"}
+                  >
+                    {labels.localeSkLabel}
+                  </button>
+                </div>
+              </div>
             </div>
           </aside>
         </div>

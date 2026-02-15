@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { defaultLocale } from "../../content";
-import { formatDisplayDate } from "../../lib/date-format";
-import { getUiText } from "../../i18n/ui-text";
+import { BookOpen } from "lucide-react";
+import { getUiText } from "../../i18n";
+import { getRequestLocale } from "../../i18n/locale.server";
+import { CodeBlock } from "../../components/code-block";
 import { blogPosts, getBlogPostBySlug } from "../../../content/blog";
 import type { BlogBlock } from "../../../content/blog/types";
+
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -43,9 +50,13 @@ function renderBlock(block: BlogBlock) {
 
   if (block.type === "code") {
     return (
-      <pre key={block.code} className="overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-950 p-4 text-sm text-zinc-100">
-        <code>{block.code}</code>
-      </pre>
+      <CodeBlock
+        key={block.code}
+        code={block.code}
+        title={block.language}
+        language={block.language}
+        showLineNumbers
+      />
     );
   }
 
@@ -61,7 +72,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -91,7 +103,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -103,9 +116,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <main className="page-shell motion-shell">
       <article className="section-card space-y-8">
         <header className="space-y-3">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100"
+          >
+            <BookOpen className="h-3.5 w-3.5" aria-hidden />
+            {ui.blog.badgeLabel}
+          </Link>
           <h1 className="section-title text-3xl sm:text-4xl">{post.title}</h1>
           <p className="text-sm text-zinc-500">
-            {ui.blog.publishedLabel} {formatDisplayDate(post.date)} · {post.readTime}
+            {ui.blog.publishedLabel} {dateFormatter.format(new Date(`${post.date}T00:00:00`))} · {post.readTime}
           </p>
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (

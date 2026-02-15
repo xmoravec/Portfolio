@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 
 type PhotoItem = {
   src: string;
@@ -45,7 +46,7 @@ export function PhotoGallery({ items, labels }: PhotoGalleryProps) {
             key={photo.src}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className="section-card group w-[88vw] max-w-none shrink-0 snap-start overflow-hidden p-0 text-left md:w-[52vw] md:max-w-120 lg:w-[34vw]"
+            className="section-card group w-[min(88vw,30rem)] shrink-0 snap-start overflow-hidden p-0 text-left md:w-[52vw] md:max-w-120 lg:w-[34vw]"
             aria-label={`${labels.openPhotoDetailsPrefix} ${photo.title}`}
           >
             <div className="relative aspect-4/3 w-full bg-zinc-100 md:aspect-5/4">
@@ -87,10 +88,7 @@ export function PhotoGallery({ items, labels }: PhotoGalleryProps) {
               className="absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-zinc-900/55 text-white/90 transition hover:bg-zinc-900/75"
               aria-label={labels.closeViewerAria}
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <path d="M6 6l12 12" />
-                <path d="M18 6l-12 12" />
-              </svg>
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
 
             <div className="relative aspect-4/3 w-full md:aspect-video">

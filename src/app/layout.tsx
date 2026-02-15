@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import { defaultLocale } from "./content";
 import { SiteNav } from "./components/site-nav";
-import { getUiText } from "./i18n/ui-text";
+import { getUiText } from "./i18n";
+import { enUiText } from "./i18n/ui-text.en";
+import { getRequestLocale } from "./i18n/locale.server";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,33 +18,41 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const ui = getUiText(defaultLocale);
-
 export const metadata: Metadata = {
-  title: "Erik Moravec",
-  description: ui.metadata.description,
+  title: "XMoravec",
+  description: enUiText.metadata.description,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 
-export default function RootLayout({
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95">
           <div className="mx-auto flex w-full max-w-none items-center justify-between px-4 py-3 sm:px-6 lg:max-w-7xl lg:px-10">
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
-              Erik Moravec
+              XMoravec
             </Link>
-            <SiteNav labels={ui.nav} />
+            <SiteNav labels={ui.nav} currentLocale={locale} />
           </div>
         </header>
         {children}
+        <Analytics />
       </body>
     </html>
   );

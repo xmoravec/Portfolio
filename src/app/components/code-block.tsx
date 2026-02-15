@@ -1,115 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type CodeBlockProps = {
   code: string;
   title?: string;
+  language?: string;
   compact?: boolean;
+  showLineNumbers?: boolean;
+  wrapLongLines?: boolean;
   enableCopy?: boolean;
   copyLabel?: string;
   copiedLabel?: string;
 };
 
-const KEYWORDS = new Set([
-  "async",
-  "await",
-  "const",
-  "let",
-  "return",
-  "if",
-  "else",
-  "for",
-  "while",
-  "function",
-  "type",
-  "interface",
-  "import",
-  "from",
-  "export",
-  "new",
-  "try",
-  "catch",
-  "throw",
-]);
-
-function renderToken(token: string, key: string) {
-  if (KEYWORDS.has(token)) {
-    return (
-      <span key={key} className="text-fuchsia-300">
-        {token}
-      </span>
-    );
-  }
-
-  if (/^\d+$/.test(token)) {
-    return (
-      <span key={key} className="text-amber-300">
-        {token}
-      </span>
-    );
-  }
-
-  if (/^[{}()[\].,;:+\-*/=<>&|!]+$/.test(token)) {
-    return (
-      <span key={key} className="text-zinc-400">
-        {token}
-      </span>
-    );
-  }
-
-  return (
-    <span key={key} className="text-sky-200">
-      {token}
-    </span>
-  );
-}
-
-function tokenizeCode(line: string, lineIndex: number) {
-  const commentIndex = line.indexOf("//");
-  const codePart = commentIndex >= 0 ? line.slice(0, commentIndex) : line;
-  const commentPart = commentIndex >= 0 ? line.slice(commentIndex) : "";
-
-  const matches = codePart.match(/\s+|"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|`[^`\\]*(?:\\.[^`\\]*)*`|[A-Za-z_][A-Za-z0-9_]*|\d+|[{}()[\].,;:+\-*/=<>&|!]+/g) ?? [];
-
-  const rendered = matches.map((token, tokenIndex) => {
-    const key = `${lineIndex}-${tokenIndex}`;
-
-    if (/^\s+$/.test(token)) {
-      return <span key={key}>{token}</span>;
-    }
-
-    if (/^"|^'|^`/.test(token)) {
-      return (
-        <span key={key} className="text-emerald-300">
-          {token}
-        </span>
-      );
-    }
-
-    return renderToken(token, key);
-  });
-
-  if (commentPart) {
-    rendered.push(
-      <span key={`${lineIndex}-comment`} className="text-zinc-500">
-        {commentPart}
-      </span>,
-    );
-  }
-
-  return rendered;
-}
-
 export function CodeBlock({
   code,
   title,
+  language = "typescript",
   compact = false,
+  showLineNumbers = true,
+  wrapLongLines = false,
   enableCopy = false,
   copyLabel = "Copy",
   copiedLabel = "Copied",
 }: CodeBlockProps) {
-  const lines = code.split("\n");
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -153,16 +70,34 @@ export function CodeBlock({
         ) : null}
       </div>
 
-      <pre className={`overflow-x-auto bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(236,72,153,0.12),transparent_42%)] px-0 py-3 text-zinc-100 ${compact ? "text-xs" : "text-sm"}`}>
-        <code>
-          {lines.map((line, lineIndex) => (
-            <span key={lineIndex} className="grid grid-cols-[2.2rem_1fr] gap-3 px-4 leading-6">
-              <span className="select-none text-right text-zinc-600">{lineIndex + 1}</span>
-              <span>{tokenizeCode(line, lineIndex)}</span>
-            </span>
-          ))}
-        </code>
-      </pre>
+      <div className="overflow-x-auto bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(236,72,153,0.12),transparent_42%)] px-0 py-3">
+        <SyntaxHighlighter
+          language={language}
+          style={oneDark}
+          showLineNumbers={showLineNumbers}
+          wrapLongLines={wrapLongLines}
+          customStyle={{
+            margin: 0,
+            background: "transparent",
+            fontSize: compact ? "0.75rem" : "0.875rem",
+            lineHeight: compact ? "1.45" : "1.6",
+            padding: "0 1rem",
+          }}
+          codeTagProps={{
+            style: {
+              fontFamily: "var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+            },
+          }}
+          lineNumberStyle={{
+            minWidth: "1.8rem",
+            color: "#71717a",
+            marginRight: "0.85rem",
+            userSelect: "none",
+          }}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
     </div>
   );
 }

@@ -2,15 +2,16 @@ import Link from "next/link";
 import { BlogPostCard } from "./components/blog-post-card";
 import { PhotoGallery } from "./components/photo-gallery";
 import { ProjectPostCard } from "./components/project-post-card";
-import { defaultLocale, getHomeContent } from "./content";
-import { getUiText } from "./i18n/ui-text";
-import { formatDisplayDate } from "./lib/date-format";
+import { getHomeContent } from "./content";
+import { getUiText } from "./i18n";
+import { getRequestLocale } from "./i18n/locale.server";
 import { blogPosts } from "../content/blog";
 import { projectPosts } from "../content/projects";
 
-export default function Home() {
-  const content = getHomeContent(defaultLocale);
-  const ui = getUiText(defaultLocale);
+export default async function Home() {
+  const locale = await getRequestLocale();
+  const content = getHomeContent(locale);
+  const ui = getUiText(locale);
   const featuredProject = projectPosts[0];
   const featuredBlogPost = blogPosts[0];
 
@@ -42,6 +43,28 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
+        <section aria-labelledby="intro-heading" className="section-card space-y-4">
+          <h2 id="intro-heading" className="section-title">
+            {content.intro.title}
+          </h2>
+          <p className="muted-text text-base text-zinc-700">{ui.about.introFirst}</p>
+          <Link href="/about" className="text-sm font-medium text-zinc-900 underline">
+            {ui.home.readFullAbout}
+          </Link>
+        </section>
+
+        <section aria-labelledby="now-heading" className="section-card space-y-3">
+          <h2 id="now-heading" className="section-title">
+            {content.now.title}
+          </h2>
+          <p className="muted-text text-base text-zinc-700">{ui.about.nowFirst}</p>
+          <Link href={content.now.cta.href} className="text-sm font-medium text-zinc-900 underline">
+            {ui.home.readFullNow}
+          </Link>
+        </section>
+      </div>
+
       <section aria-labelledby="photos-heading" className="space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h2 id="photos-heading" className="section-title">
@@ -52,30 +75,6 @@ export default function Home() {
         <PhotoGallery items={content.photos.items} labels={ui.photos} />
       </section>
 
-      <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
-        <section aria-labelledby="intro-heading" className="section-card space-y-4">
-          <h2 id="intro-heading" className="section-title">
-            {content.intro.title}
-          </h2>
-          {content.intro.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="muted-text text-base text-zinc-700">
-              {paragraph}
-            </p>
-          ))}
-        </section>
-
-        <section aria-labelledby="now-heading" className="section-card space-y-3">
-          <h2 id="now-heading" className="section-title">
-            {content.now.title}
-          </h2>
-          <p className="muted-text">{content.now.summary}</p>
-          <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {formatDisplayDate(content.now.lastUpdated)}</p>
-          <Link href={content.now.cta.href} className="text-sm font-medium text-zinc-900 underline">
-            {content.now.cta.label}
-          </Link>
-        </section>
-      </div>
-
       {featuredProject || featuredBlogPost ? (
         <section aria-labelledby="featured-heading" className="space-y-4">
           <div className="flex flex-wrap items-end justify-between gap-3">
@@ -85,13 +84,21 @@ export default function Home() {
             <p className="text-sm text-zinc-500">{ui.home.featuredSubtitle}</p>
           </div>
           <div className="grid gap-4 xl:grid-cols-2">
-            {featuredProject ? <ProjectPostCard project={featuredProject} compact openProjectDetailLabel={ui.projects.openProjectDetail} /> : null}
+            {featuredProject ? (
+              <ProjectPostCard
+                project={featuredProject}
+                compact
+                openProjectDetailLabel={ui.projects.openProjectDetail}
+                badgeLabel={ui.projects.badgeLabel}
+              />
+            ) : null}
             {featuredBlogPost ? (
               <BlogPostCard
                 post={featuredBlogPost}
                 compact
                 readArticleLabel={ui.blog.readArticle}
                 publishedLabel={ui.blog.publishedLabel}
+                badgeLabel={ui.blog.badgeLabel}
               />
             ) : null}
           </div>
