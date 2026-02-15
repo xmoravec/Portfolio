@@ -46,6 +46,10 @@ export type UiText = {
       mode: string;
       summary: string;
     }>;
+    supportTitle: string;
+    supportDescription: string;
+    supportButtonLabel: string;
+    supportCaption: string;
   };
   blog: {
     pageTitle: string;
@@ -203,6 +207,11 @@ const enUiText: UiText = {
           "QA and development collaboration on a globally used product.",
       },
     ],
+    supportTitle: "Support My Work",
+    supportDescription:
+      "If my projects, writing, or open sharing helped you in any way, your support means a lot and helps me keep building.",
+    supportButtonLabel: "Buy me a coffee on Revolut",
+    supportCaption: "Thank you, really. I appreciate every bit of support.",
   },
   blog: {
     pageTitle: "Blog",

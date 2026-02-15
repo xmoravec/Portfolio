@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Heart } from "lucide-react";
 import { defaultLocale } from "../content";
 import { getUiText } from "../i18n/ui-text";
 
@@ -70,6 +71,21 @@ export default function AboutPage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="section-card space-y-4" aria-labelledby="support-heading">
+        <h2 id="support-heading" className="section-title">{ui.about.supportTitle}</h2>
+        <p className="muted-text">{ui.about.supportDescription}</p>
+        <a
+          href="https://revolut.me/xmoravec"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-fuchsia-200 bg-linear-to-r from-blue-600 via-violet-600 to-fuchsia-600 px-6 py-4 text-center text-base font-semibold text-white shadow-lg transition duration-200 hover:-translate-y-0.5 hover:brightness-110 sm:w-auto sm:min-w-88"
+        >
+          <Heart className="h-5 w-5 transition group-hover:scale-110" aria-hidden />
+          {ui.about.supportButtonLabel}
+        </a>
+        <p className="text-sm text-zinc-500">{ui.about.supportCaption}</p>
       </section>
     </main>
   );
