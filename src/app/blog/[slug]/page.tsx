@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
-import { defaultLocale } from "../../content";
-import { getUiText } from "../../i18n/ui-text";
+import { getUiText } from "../../i18n";
+import { getRequestLocale } from "../../i18n/locale.server";
 import { CodeBlock } from "../../components/code-block";
 import { blogPosts, getBlogPostBySlug } from "../../../content/blog";
 import type { BlogBlock } from "../../../content/blog/types";
@@ -72,7 +72,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -102,7 +103,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Wrench } from "lucide-react";
-import { defaultLocale } from "../../content";
-import { getUiText } from "../../i18n/ui-text";
+import { getUiText } from "../../i18n";
+import { getRequestLocale } from "../../i18n/locale.server";
 import { CodeBlock } from "../../components/code-block";
 import { getProjectPostBySlug, projectPosts } from "../../../content/projects";
 
@@ -22,7 +22,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { slug } = await params;
   const project = getProjectPostBySlug(slug);
 
@@ -52,7 +53,8 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { slug } = await params;
   const project = getProjectPostBySlug(slug);
 

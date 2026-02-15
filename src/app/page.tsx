@@ -2,14 +2,16 @@ import Link from "next/link";
 import { BlogPostCard } from "./components/blog-post-card";
 import { PhotoGallery } from "./components/photo-gallery";
 import { ProjectPostCard } from "./components/project-post-card";
-import { defaultLocale, getHomeContent } from "./content";
-import { getUiText } from "./i18n/ui-text";
+import { getHomeContent } from "./content";
+import { getUiText } from "./i18n";
+import { getRequestLocale } from "./i18n/locale.server";
 import { blogPosts } from "../content/blog";
 import { projectPosts } from "../content/projects";
 
-export default function Home() {
-  const content = getHomeContent(defaultLocale);
-  const ui = getUiText(defaultLocale);
+export default async function Home() {
+  const locale = await getRequestLocale();
+  const content = getHomeContent(locale);
+  const ui = getUiText(locale);
   const featuredProject = projectPosts[0];
   const featuredBlogPost = blogPosts[0];
 

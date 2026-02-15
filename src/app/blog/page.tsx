@@ -1,10 +1,11 @@
 import { BlogPostCard } from "../components/blog-post-card";
-import { defaultLocale } from "../content";
-import { getUiText } from "../i18n/ui-text";
+import { getUiText } from "../i18n";
+import { getRequestLocale } from "../i18n/locale.server";
 import { blogPosts } from "../../content/blog";
 
-export default function BlogPage() {
-  const ui = getUiText(defaultLocale);
+export default async function BlogPage() {
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
 
   return (
     <main className="page-shell motion-shell">

@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import type { Locale } from "../content";
+import { localeCookieName } from "../i18n/locale.shared";
 
 type SiteNavProps = {
+  currentLocale: Locale;
   labels: {
     primaryAria: string;
     home: string;
@@ -17,13 +20,26 @@ type SiteNavProps = {
     openMenuAria: string;
     closeMenuAria: string;
     mobileNavAria: string;
+    localeSwitcherAria: string;
+    localeEnLabel: string;
+    localeSkLabel: string;
   };
 };
 
-export function SiteNav({ labels }: SiteNavProps) {
+export function SiteNav({ labels, currentLocale }: SiteNavProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const showHome = pathname !== "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function updateLocale(nextLocale: Locale) {
+    if (nextLocale === currentLocale) {
+      return;
+    }
+
+    document.cookie = `${localeCookieName}=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+    router.refresh();
+  }
 
   const navItems = [
     { label: labels.projects, href: "/projects" },
@@ -60,6 +76,38 @@ export function SiteNav({ labels }: SiteNavProps) {
             {item.label}
           </Link>
         ))}
+        <div
+          className="relative inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 p-0.5"
+          role="group"
+          aria-label={labels.localeSwitcherAria}
+        >
+          <span
+            className={`absolute bottom-0.5 top-0.5 w-9 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+              currentLocale === "en" ? "translate-x-0" : "translate-x-9"
+            }`}
+            aria-hidden
+          />
+          <button
+            type="button"
+            onClick={() => updateLocale("en")}
+            className={`relative z-10 inline-flex h-8 w-9 items-center justify-center rounded-full text-xs font-semibold transition ${
+              currentLocale === "en" ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-700"
+            }`}
+            aria-pressed={currentLocale === "en"}
+          >
+            {labels.localeEnLabel}
+          </button>
+          <button
+            type="button"
+            onClick={() => updateLocale("sk")}
+            className={`relative z-10 inline-flex h-8 w-9 items-center justify-center rounded-full text-xs font-semibold transition ${
+              currentLocale === "sk" ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-700"
+            }`}
+            aria-pressed={currentLocale === "sk"}
+          >
+            {labels.localeSkLabel}
+          </button>
+        </div>
       </nav>
 
       <button
@@ -121,6 +169,36 @@ export function SiteNav({ labels }: SiteNavProps) {
                   {item.label}
                 </Link>
               ))}
+
+              <div className="mt-2 rounded-xl border border-zinc-700 bg-zinc-800/70 p-2">
+                <p className="mb-2 text-xs uppercase tracking-wide text-zinc-400">{labels.localeSwitcherAria}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => updateLocale("en")}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      currentLocale === "en"
+                        ? "bg-white text-zinc-900"
+                        : "bg-zinc-900 text-zinc-300 hover:bg-zinc-700 hover:text-white"
+                    }`}
+                    aria-pressed={currentLocale === "en"}
+                  >
+                    {labels.localeEnLabel}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateLocale("sk")}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      currentLocale === "sk"
+                        ? "bg-white text-zinc-900"
+                        : "bg-zinc-900 text-zinc-300 hover:bg-zinc-700 hover:text-white"
+                    }`}
+                    aria-pressed={currentLocale === "sk"}
+                  >
+                    {labels.localeSkLabel}
+                  </button>
+                </div>
+              </div>
             </div>
           </aside>
         </div>

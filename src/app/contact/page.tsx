@@ -1,6 +1,6 @@
 import { submitContactForm } from "./actions";
-import { defaultLocale } from "../content";
-import { getUiText } from "../i18n/ui-text";
+import { getUiText } from "../i18n";
+import { getRequestLocale } from "../i18n/locale.server";
 import { Facebook, Github, Linkedin, Mail } from "lucide-react";
 
 const contactWayValues = [
@@ -93,9 +93,9 @@ function getFeedback(
 }
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
-  const ui = getUiText(defaultLocale);
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
   const { status, code } = await searchParams;
-  const formStartedAt = String(Date.now());
   const feedback = getFeedback(ui.contact.feedback, status, code);
   const contactChannelLabels: Record<(typeof contactWayValues)[number]["key"], string> = {
     email: ui.contact.channels.email,
@@ -124,7 +124,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           <p className="muted-text text-base">{ui.contact.formDescription}</p>
           {feedback ? <p className={feedback.className}>{feedback.text}</p> : null}
           <form className="space-y-3" action={submitContactForm}>
-            <input type="hidden" name="formStartedAt" value={formStartedAt} readOnly />
+            <input type="hidden" name="formStartedAt" value="" readOnly />
             <div className="hidden" aria-hidden>
               <label htmlFor="company">{ui.contact.fields.honeypot}</label>
               <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />

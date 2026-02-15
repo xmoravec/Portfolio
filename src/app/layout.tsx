@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import { defaultLocale } from "./content";
 import { SiteNav } from "./components/site-nav";
-import { getUiText } from "./i18n/ui-text";
+import { getUiText } from "./i18n";
+import { enUiText } from "./i18n/ui-text.en";
+import { getRequestLocale } from "./i18n/locale.server";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,11 +18,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const ui = getUiText(defaultLocale);
-
 export const metadata: Metadata = {
   title: "XMoravec",
-  description: ui.metadata.description,
+  description: enUiText.metadata.description,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 
@@ -31,13 +30,16 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -46,7 +48,7 @@ export default function RootLayout({
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
               XMoravec
             </Link>
-            <SiteNav labels={ui.nav} />
+            <SiteNav labels={ui.nav} currentLocale={locale} />
           </div>
         </header>
         {children}

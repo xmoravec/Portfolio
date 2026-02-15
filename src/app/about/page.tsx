@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { defaultLocale } from "../content";
-import { getUiText } from "../i18n/ui-text";
+import { getUiText } from "../i18n";
+import { getRequestLocale } from "../i18n/locale.server";
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   day: "2-digit",
@@ -9,8 +9,9 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
   year: "numeric",
 });
 
-export default function AboutPage() {
-  const ui = getUiText(defaultLocale);
+export default async function AboutPage() {
+  const locale = await getRequestLocale();
+  const ui = getUiText(locale);
 
   return (
     <main className="page-shell motion-shell">
