@@ -62,7 +62,7 @@ const enHomeContent: HomeContent = {
       secondaryCta: { label: "What I’m Doing Now", href: "/about#now" },
     },
     intro: {
-      title: "A bit about me",
+      title: "My Philosophy",
       paragraphs: [
         "I enjoy turning rough ideas into reliable, understandable products. My default approach is to optimize for clarity first, then iterate on depth.",
         "Alongside project work, I write development logs that capture architecture decisions, trade-offs, and what is still unfinished.",

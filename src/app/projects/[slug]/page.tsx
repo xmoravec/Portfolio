@@ -87,7 +87,24 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         <section className="space-y-3">
           <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">{ui.projects.intentTitle}</h2>
-          <p className="muted-text text-base">{project.summary}</p>
+          <p className="muted-text text-base">
+            {project.summary}
+            {project.externalReference ? (
+              <>
+                {" "}
+                Public project reference:{" "}
+                <a
+                  href={project.externalReference.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-zinc-900 underline"
+                >
+                  {project.externalReference.label}
+                </a>
+                .
+              </>
+            ) : null}
+          </p>
           <ul className="space-y-2">
             {project.goals.map((goal) => (
               <li key={goal} className="flex gap-2">

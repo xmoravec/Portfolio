@@ -1,7 +1,8 @@
 import type { ProjectPost } from "./types";
+import { acquamareaProjectPost } from "./acquamarea-project";
 import { portfolioProjectPost } from "./portfolio-project";
 
-export const projectPosts: ProjectPost[] = [portfolioProjectPost].sort(
+export const projectPosts: ProjectPost[] = [acquamareaProjectPost, portfolioProjectPost].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 

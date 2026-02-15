@@ -46,12 +46,20 @@ export default function Home() {
           <h2 id="intro-heading" className="section-title">
             {content.intro.title}
           </h2>
+          <p className="muted-text text-base text-zinc-700">{ui.about.introFirst}</p>
+          <Link href="/about" className="text-sm font-medium text-zinc-900 underline">
+            Read full about section
+          </Link>
         </section>
 
         <section aria-labelledby="now-heading" className="section-card space-y-3">
           <h2 id="now-heading" className="section-title">
             {content.now.title}
           </h2>
+          <p className="muted-text text-base text-zinc-700">{ui.about.nowFirst}</p>
+          <Link href="/about#now" className="text-sm font-medium text-zinc-900 underline">
+            Read full now section
+          </Link>
         </section>
       </div>
 

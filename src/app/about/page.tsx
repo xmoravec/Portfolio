@@ -13,10 +13,6 @@ export default function AboutPage() {
 
   return (
     <main className="page-shell motion-shell">
-      <section className="space-y-4">
-        <h1 className="section-title text-3xl sm:text-5xl">{ui.about.title}</h1>
-      </section>
-
       <section className="section-card grid gap-6 md:grid-cols-[220px_1fr] md:items-center">
         <div className="relative aspect-square overflow-hidden rounded-xl border border-zinc-200">
           <Image
@@ -28,6 +24,7 @@ export default function AboutPage() {
           />
         </div>
         <div className="space-y-3">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">{ui.about.title}</h1>
           <p className="muted-text">{ui.about.introFirst}</p>
           <p className="muted-text">{ui.about.introSecond}</p>
         </div>

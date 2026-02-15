@@ -10,6 +10,10 @@ export type ProjectPost = {
   date: string;
   readTime: string;
   summary: string;
+  externalReference?: {
+    label: string;
+    href: string;
+  };
   tags: string[];
   previewCode: string;
   goals: string[];

@@ -135,7 +135,7 @@ const enUiText: UiText = {
       "This website is both my portfolio and a personal working notebook.",
     nowTitle: "Now",
     nowFirst:
-      "I am actively working as an external contractor and freelancer. I cooperate with various big companies like InfoBeans and DHL IT Services on complex software design and delivery.\
+      "I am actively working as a contractor and freelancer. I cooperate with various big companies like InfoBeans and DHL IT Services on complex software design and delivery.\
        I also work with other civilian and business clients to develop personalized web and software solutions.",
     nowSecond:
       "In my free time, I am currently pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish.\
