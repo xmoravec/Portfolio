@@ -1,7 +1,22 @@
+import type { CSSProperties, ComponentType } from "react";
+
 declare module "react-syntax-highlighter" {
-  export const Prism: unknown;
+  type SyntaxHighlighterProps = {
+    language?: string;
+    style?: Record<string, CSSProperties>;
+    showLineNumbers?: boolean;
+    wrapLongLines?: boolean;
+    customStyle?: CSSProperties;
+    codeTagProps?: {
+      style?: CSSProperties;
+    };
+    lineNumberStyle?: CSSProperties;
+    children?: string;
+  };
+
+  export const Prism: ComponentType<SyntaxHighlighterProps>;
 }
 
 declare module "react-syntax-highlighter/dist/esm/styles/prism" {
-  export const oneDark: unknown;
+  export const oneDark: Record<string, CSSProperties>;
 }

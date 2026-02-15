@@ -123,7 +123,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           <p className="muted-text text-base">{ui.contact.formDescription}</p>
           {feedback ? <p className={feedback.className}>{feedback.text}</p> : null}
           <form className="space-y-3" action={submitContactForm}>
-            <input type="hidden" name="formStartedAt" value={Date.now().toString()} />
+            <input type="hidden" name="formStartedAt" value="" />
             <div className="hidden" aria-hidden>
               <label htmlFor="company">{ui.contact.fields.honeypot}</label>
               <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />

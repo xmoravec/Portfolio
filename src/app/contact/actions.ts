@@ -111,9 +111,9 @@ export async function submitContactForm(formData: FormData) {
   const email = toSafeText(formData.get("email")).toLowerCase();
   const message = toSafeText(formData.get("message"));
   const company = toSafeText(formData.get("company"));
-  const formStartedAt = Number(toSafeText(formData.get("formStartedAt")));
+  const formStartedAt = Number.parseInt(toSafeText(formData.get("formStartedAt")), 10);
 
-  const isTooFast = Number.isFinite(formStartedAt) && Date.now() - formStartedAt < 1500;
+  const isTooFast = Number.isFinite(formStartedAt) && formStartedAt > 0 && Date.now() - formStartedAt < 1500;
   const hasSuspiciousLink = URL_PATTERN.test(message) && message.length < 40;
 
   if (company || isTooFast || hasSuspiciousLink) {

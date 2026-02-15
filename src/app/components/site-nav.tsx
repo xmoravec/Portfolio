@@ -33,10 +33,6 @@ export function SiteNav({ labels }: SiteNavProps) {
   ];
 
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!isMenuOpen) {
       return;
     }
