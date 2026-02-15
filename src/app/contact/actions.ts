@@ -116,25 +116,7 @@ export async function submitContactForm(formData: FormData) {
   const isTooFast = Number.isFinite(formStartedAt) && Date.now() - formStartedAt < 1500;
   const hasSuspiciousLink = URL_PATTERN.test(message) && message.length < 40;
 
-  console.info("[contact-form] Submission received", {
-    name,
-    email,
-    message,
-    messageLength: message.length,
-    company,
-    formStartedAt,
-    elapsedMs: Number.isFinite(formStartedAt) ? Date.now() - formStartedAt : null,
-    checks: {
-      isTooFast,
-      hasSuspiciousLink,
-      hasHoneypotValue: Boolean(company),
-      hasValidEmail: EMAIL_PATTERN.test(email),
-    },
-    resendConfigured: Boolean(process.env.RESEND_API_KEY),
-  });
-
   if (company || isTooFast || hasSuspiciousLink) {
-    console.warn("[contact-form] Blocked by spam checks", { email, company, isTooFast, hasSuspiciousLink });
     redirect("/contact?status=error&code=spam");
   }
 
@@ -143,7 +125,6 @@ export async function submitContactForm(formData: FormData) {
   }
 
   if (!EMAIL_PATTERN.test(email)) {
-    console.warn("[contact-form] Invalid email", { email });
     redirect("/contact?status=error&code=email");
   }
 
@@ -152,7 +133,6 @@ export async function submitContactForm(formData: FormData) {
   }
 
   const sendResult = await sendWithResend({ name, email, message });
-  console.info("[contact-form] Delivery result", { email, sendResult });
 
   if (sendResult === "sent") {
     redirect("/contact?status=sent");

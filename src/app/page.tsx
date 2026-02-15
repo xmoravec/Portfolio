@@ -4,9 +4,14 @@ import { PhotoGallery } from "./components/photo-gallery";
 import { ProjectPostCard } from "./components/project-post-card";
 import { defaultLocale, getHomeContent } from "./content";
 import { getUiText } from "./i18n/ui-text";
-import { formatDisplayDate } from "./lib/date-format";
 import { blogPosts } from "../content/blog";
 import { projectPosts } from "../content/projects";
+
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 export default function Home() {
   const content = getHomeContent(defaultLocale);
@@ -69,7 +74,7 @@ export default function Home() {
             {content.now.title}
           </h2>
           <p className="muted-text">{content.now.summary}</p>
-          <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {formatDisplayDate(content.now.lastUpdated)}</p>
+          <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {dateFormatter.format(new Date(`${content.now.lastUpdated}T00:00:00`))}</p>
           <Link href={content.now.cta.href} className="text-sm font-medium text-zinc-900 underline">
             {content.now.cta.label}
           </Link>

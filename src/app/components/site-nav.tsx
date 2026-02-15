@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 type SiteNavProps = {
   labels: {
@@ -74,11 +75,7 @@ export function SiteNav({ labels }: SiteNavProps) {
         onClick={() => setIsMenuOpen(true)}
       >
         <span className="sr-only">{labels.openMenuAria}</span>
-        <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-          <path d="M4 7h16" />
-          <path d="M4 12h16" />
-          <path d="M4 17h16" />
-        </svg>
+        <Menu className="h-5 w-5" aria-hidden="true" />
       </button>
 
       {isMenuOpen ? (
@@ -104,10 +101,7 @@ export function SiteNav({ labels }: SiteNavProps) {
                 aria-label={labels.closeMenuAria}
                 onClick={() => setIsMenuOpen(false)}
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M6 6l12 12" />
-                  <path d="M18 6l-12 12" />
-                </svg>
+                <X className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
 

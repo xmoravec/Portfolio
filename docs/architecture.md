@@ -1,6 +1,6 @@
 # Portfolio Architecture
 
-Last updated: 2026-02-14
+Last updated: 2026-02-15
 
 This document is the technical source of truth for this portfolio codebase. Keep it updated whenever architecture, routing, content flow, integrations, or deployment assumptions change.
 
@@ -53,8 +53,10 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - `src/app/components/site-nav.tsx`
   - Path-aware navigation with conditional Home link on non-home routes
   - Mobile hamburger drawer with overlay, close actions, and locale-driven labels
+  - Icons use `lucide-react` instead of inline SVG path markup
 - `src/app/components/code-block.tsx`
   - Reusable highlighted code display surface with compact/full variants
+  - Built on `react-syntax-highlighter` with parameterized options (language, line numbers, wrapping, copy button)
 - `src/app/components/blog-post-card.tsx`
   - Reusable blog preview card used in blog listing and homepage featured section
 - `src/app/components/project-post-card.tsx`
@@ -74,7 +76,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - Blog content source:
   - `src/content/blog/types.ts` for schema
   - `src/content/blog/index.ts` for index and lookup
-  - `src/content/blog/posts/development-log.ts` for actual post content
+  - `src/content/blog/posts/*` for actual post content modules
 - Project content source:
   - `src/content/projects/types.ts` for schema
   - `src/content/projects/index.ts` for index and lookup
@@ -119,9 +121,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
   - `pill`
   - `horizontal-scroll`
 - Reusable code display component in `src/app/components/code-block.tsx`
-  - Colorized token rendering
-  - Window-style header accents
-  - Line numbers and gradient surface
+  - Library-based syntax highlighting via `react-syntax-highlighter`
+  - Header accents, optional line numbers, optional copy button, and gradient surface
   - Used in project previews and detail examples
 
 ### 5.2 Layout Behavior
@@ -167,9 +168,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
     - hidden honeypot field (`company`)
     - timing check (`formStartedAt` too fast submit)
     - suspicious short-link message pattern
-- Logging:
-  - Logs incoming submission payload and validation context
-  - Logs spam-block and delivery outcomes
+- No server-side request logging is emitted from this action
 
 ### 6.3 Delivery Integration (Resend)
 
@@ -213,6 +212,7 @@ Contact sender/recipient are currently defined in `src/app/contact/config.ts`.
 - Reusable blog/project featured cards with thumbnail-like code previews
 - Contact form validation + anti-spam + optional Resend integration
 - Contact emails include styled HTML summary plus plain-text fallback
+- Date display now uses inline `Intl.DateTimeFormat` at render sites
 - Subtle motion layer with reduced-motion support
 - Mobile drawer navigation and full-width mobile shell behavior are implemented
 - UI-facing strings are centralized in locale dictionaries to support bilingual rollout

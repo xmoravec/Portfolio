@@ -1,7 +1,12 @@
 import Image from "next/image";
 import { defaultLocale } from "../content";
 import { getUiText } from "../i18n/ui-text";
-import { formatDisplayDate } from "../lib/date-format";
+
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 export default function AboutPage() {
   const ui = getUiText(defaultLocale);
@@ -32,7 +37,7 @@ export default function AboutPage() {
         <h2 className="section-title">{ui.about.nowTitle}</h2>
         <p className="muted-text">{ui.about.nowFirst}</p>
         <p className="muted-text">{ui.about.nowSecond}</p>
-        <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {formatDisplayDate("2026-02-14")}</p>
+        <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {dateFormatter.format(new Date("2026-02-14T00:00:00"))}</p>
       </section>
     </main>
   );
