@@ -10,7 +10,7 @@ This codebase is in the "polish and production wiring" phase: core routes are im
 ## Technology Stack
 
 - **Framework**: Next.js `16.1.6` with App Router
-- **UI**: React `19.2.3`
+- **UI**: React `19.2.4`
 - **Language**: TypeScript `^5`
 - **Styling**: Tailwind CSS `^4` (via `@tailwindcss/postcss`)
 - **Linting**: ESLint `^9` with `eslint-config-next`

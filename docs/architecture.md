@@ -15,7 +15,7 @@ This document is the technical source of truth for this portfolio codebase. Keep
 ## 2) Technology Stack
 
 - **Next.js** `16.1.6`
-- **React / React DOM** `19.2.3`
+- **React / React DOM** `19.2.4`
 - **TypeScript** `^5` with strict mode
 - **Tailwind CSS** `^4` via `@tailwindcss/postcss`
 - **ESLint** `^9` with `eslint-config-next` core-web-vitals and TypeScript presets

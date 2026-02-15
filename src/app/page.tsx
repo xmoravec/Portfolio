@@ -7,12 +7,6 @@ import { getUiText } from "./i18n/ui-text";
 import { blogPosts } from "../content/blog";
 import { projectPosts } from "../content/projects";
 
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
-
 export default function Home() {
   const content = getHomeContent(defaultLocale);
   const ui = getUiText(defaultLocale);
@@ -33,19 +27,33 @@ export default function Home() {
         </p>
         <div className="flex flex-wrap gap-3 sm:gap-4">
           <Link
-            href={content.hero.primaryCta.href}
+            href="/blog"
             className="button-primary w-full justify-center sm:w-auto"
           >
-            {content.hero.primaryCta.label}
+            Read Blog
           </Link>
           <Link
-            href={content.hero.secondaryCta.href}
+            href="/contact"
             className="button-secondary w-full justify-center sm:w-auto"
           >
-            {content.hero.secondaryCta.label}
+            Contact me
           </Link>
         </div>
       </section>
+
+      <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
+        <section aria-labelledby="intro-heading" className="section-card space-y-4">
+          <h2 id="intro-heading" className="section-title">
+            {content.intro.title}
+          </h2>
+        </section>
+
+        <section aria-labelledby="now-heading" className="section-card space-y-3">
+          <h2 id="now-heading" className="section-title">
+            {content.now.title}
+          </h2>
+        </section>
+      </div>
 
       <section aria-labelledby="photos-heading" className="space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
@@ -56,30 +64,6 @@ export default function Home() {
         </div>
         <PhotoGallery items={content.photos.items} labels={ui.photos} />
       </section>
-
-      <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
-        <section aria-labelledby="intro-heading" className="section-card space-y-4">
-          <h2 id="intro-heading" className="section-title">
-            {content.intro.title}
-          </h2>
-          {content.intro.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="muted-text text-base text-zinc-700">
-              {paragraph}
-            </p>
-          ))}
-        </section>
-
-        <section aria-labelledby="now-heading" className="section-card space-y-3">
-          <h2 id="now-heading" className="section-title">
-            {content.now.title}
-          </h2>
-          <p className="muted-text">{content.now.summary}</p>
-          <p className="text-xs text-zinc-500">{ui.common.lastUpdatedLabel}: {dateFormatter.format(new Date(`${content.now.lastUpdated}T00:00:00`))}</p>
-          <Link href={content.now.cta.href} className="text-sm font-medium text-zinc-900 underline">
-            {content.now.cta.label}
-          </Link>
-        </section>
-      </div>
 
       {featuredProject || featuredBlogPost ? (
         <section aria-labelledby="featured-heading" className="space-y-4">

@@ -55,9 +55,9 @@ export const defaultLocale: Locale = "en";
 const enHomeContent: HomeContent = {
     hero: {
       eyebrow: "Personal Site",
-      title: "Hi, I’m Erik. I design, build, and document software that stays practical.",
+      title: "Hi, I’m Erik Moravec. I design and build exciting software that solves real problems. Or is just fun.",
       description:
-        "This site is my working portfolio: selected projects, engineering notes, and the current direction of what I am building right now.",
+        "This site is about me, my projects, my thoughts and notes. Stay if you are interested in what I am building right now or checkout my lab for some fun (Coming, under construction).",
       primaryCta: { label: "About Me", href: "/about" },
       secondaryCta: { label: "What I’m Doing Now", href: "/about#now" },
     },
@@ -74,26 +74,26 @@ const enHomeContent: HomeContent = {
         {
           src: "/images/photos/profile_picture_portugal_chair.jpg",
           alt: "Personal portrait seated outdoors",
-          title: "Portrait",
-          subtitle: "A calmer side of my day-to-day",
+          title: "Travel",
+          subtitle: "Cintra, Portugal",
         },
         {
           src: "/images/photos/profile_picture_shirt_old.jpg",
           alt: "Personal portrait in shirt",
-          title: "Everyday",
-          subtitle: "Simple moments, no filters",
+          title: "Portrait",
+          subtitle: "Courtesy of Ján Dovjak",
         },
         {
           src: "/images/photos/oktoberfest_table.jpg",
           alt: "Social table moment",
           title: "Community",
-          subtitle: "People and conversations matter",
+          subtitle: "Friends are the spice of life",
         },
         {
           src: "/images/photos/brooklyn_bridge.jpg",
           alt: "Brooklyn Bridge city view",
           title: "Places",
-          subtitle: "Movement, cities, and perspective",
+          subtitle: "Movement, Exploration, and perspective",
         },
       ],
     },
