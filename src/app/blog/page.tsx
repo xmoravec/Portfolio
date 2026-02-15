@@ -23,6 +23,7 @@ export default function BlogPage() {
             compact
             readArticleLabel={ui.blog.readArticle}
             publishedLabel={ui.blog.publishedLabel}
+            badgeLabel={ui.blog.badgeLabel}
           />
         ))}
       </section>

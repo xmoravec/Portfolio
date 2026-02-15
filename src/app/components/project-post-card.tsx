@@ -17,15 +17,21 @@ type ProjectPostCardProps = {
   project: ProjectPost;
   compact?: boolean;
   openProjectDetailLabel?: string;
+  badgeLabel?: string;
 };
 
-export function ProjectPostCard({ project, compact = false, openProjectDetailLabel = "Open project detail" }: ProjectPostCardProps) {
+export function ProjectPostCard({
+  project,
+  compact = false,
+  openProjectDetailLabel = "Open project detail",
+  badgeLabel = "Project",
+}: ProjectPostCardProps) {
   return (
     <article className="section-card space-y-4">
       <div className="space-y-2">
         <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700">
           <Wrench className="h-3.5 w-3.5" aria-hidden />
-          Project
+          {badgeLabel}
         </span>
         <p className="text-xs text-zinc-500">
           {formatDate(project.date)} · {project.readTime}

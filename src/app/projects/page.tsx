@@ -17,7 +17,12 @@ export default function ProjectsPage() {
 
       <section className="space-y-4">
         {projectPosts.map((project) => (
-          <ProjectPostCard key={project.slug} project={project} openProjectDetailLabel={ui.projects.openProjectDetail} />
+          <ProjectPostCard
+            key={project.slug}
+            project={project}
+            openProjectDetailLabel={ui.projects.openProjectDetail}
+            badgeLabel={ui.projects.badgeLabel}
+          />
         ))}
       </section>
     </main>

@@ -69,7 +69,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700 transition hover:bg-amber-100"
           >
             <Wrench className="h-3.5 w-3.5" aria-hidden />
-            Project
+            {ui.projects.badgeLabel}
           </Link>
           <h1 className="section-title text-3xl sm:text-4xl">{project.title}</h1>
           <p className="text-sm text-zinc-500">
@@ -92,7 +92,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             {project.externalReference ? (
               <>
                 {" "}
-                Public project reference:{" "}
+                {ui.projects.publicReferenceLabel}:{" "}
                 <a
                   href={project.externalReference.href}
                   target="_blank"

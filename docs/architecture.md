@@ -80,7 +80,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - Project content source:
   - `src/content/projects/types.ts` for schema
   - `src/content/projects/index.ts` for index and lookup
-  - `src/content/projects/portfolio-project.ts` for current real project entry
+  - `src/content/projects/acquamarea-project.ts` and `src/content/projects/portfolio-project.ts` for current project entries
 
 The blog rendering model is block-based typed content (`heading`, `paragraph`, `quote`, `list`, `code`) rendered directly by route component logic. Projects use slug-based routing too, but the detail page is DOM-first and can mix richer layouts and custom UI sections without being constrained to a text block schema.
 
@@ -150,6 +150,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 
 - File: `src/app/contact/page.tsx`
 - Dominant full-width form card with status messaging
+- Hidden timestamp field (`formStartedAt`) is stamped at render time for anti-spam timing checks
 - Social/contact cards placed below the form
 - Contact channels include:
   - Email (`trane128@gmail.com`)

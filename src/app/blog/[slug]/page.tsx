@@ -119,7 +119,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100"
           >
             <BookOpen className="h-3.5 w-3.5" aria-hidden />
-            Blog
+            {ui.blog.badgeLabel}
           </Link>
           <h1 className="section-title text-3xl sm:text-4xl">{post.title}</h1>
           <p className="text-sm text-zinc-500">

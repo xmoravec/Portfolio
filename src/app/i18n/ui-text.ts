@@ -25,6 +25,8 @@ export type UiText = {
     photoHint: string;
     featuredTitle: string;
     featuredSubtitle: string;
+    readFullAbout: string;
+    readFullNow: string;
   };
   about: {
     title: string;
@@ -40,6 +42,7 @@ export type UiText = {
     pageDescription: string;
     timelineTitle: string;
     timelineDescription: string;
+    badgeLabel: string;
     publishedLabel: string;
     readArticle: string;
     backToBlog: string;
@@ -47,8 +50,10 @@ export type UiText = {
   projects: {
     pageTitle: string;
     pageDescription: string;
+    badgeLabel: string;
     openProjectDetail: string;
     backToProjects: string;
+    publicReferenceLabel: string;
     intentTitle: string;
     architectureTitle: string;
     shippedTitle: string;
@@ -123,23 +128,21 @@ const enUiText: UiText = {
     photoHint: "Tap any photo to open a larger view.",
     featuredTitle: "Featured Work and Writing",
     featuredSubtitle: "Curated entries with live technical previews.",
+    readFullAbout: "Read full about section",
+    readFullNow: "Read current focus",
   },
   about: {
     title: "About Me",
     portraitAlt: "Portrait",
     introFirst:
-      "I build software with an emphasis on code quality, readability and choosing the right tools for the right job. My philosophy is to not stick to specific technologies, but to be pragmatic and open-minded about using whatever best serves the project and its users.\
-      On a practical level this allows me to gather a wide range of experience across different programming languages and technological stacks. On a personal level, learning and trying new things is what makes technology fun for me!\
-      On a pragmatic level, I believe this is made much more accesible and necessary in the new age of AI and Vibecoding.",
+      "I build software with an emphasis on code quality, readability, and choosing the right tools for the right job. My philosophy is to stay pragmatic and open-minded about using whatever best serves the project and its users. On a practical level, this lets me gather broad experience across programming languages and technology stacks. On a personal level, learning and trying new things is what keeps technology fun for me. I also think this approach is more accessible and increasingly necessary in the age of AI and vibe coding.",
     introSecond:
       "This website is both my portfolio and a personal working notebook.",
     nowTitle: "Now",
     nowFirst:
-      "I am actively working as a contractor and freelancer. I cooperate with various big companies like InfoBeans and DHL IT Services on complex software design and delivery.\
-       I also work with other civilian and business clients to develop personalized web and software solutions.",
+      "I am actively working as a contractor and freelancer. I cooperate with companies like InfoBeans and DHL IT Services on complex software design and delivery. I also work with civilian and business clients to develop personalized web and software solutions.",
     nowSecond:
-      "In my free time, I am currently pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish.\
-       In parallel, I am documenting the project work in the blog and planning my next trip!",
+      "In my free time, I am pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish. In parallel, I am documenting project work in the blog and planning my next trip.",
   },
   blog: {
     pageTitle: "Blog",
@@ -148,6 +151,7 @@ const enUiText: UiText = {
     timelineTitle: "Development Timeline",
     timelineDescription:
       "Current sequence: initial baseline (14-02-2026), then a later-stage milestone update (15-02-2026).",
+    badgeLabel: "Blog",
     publishedLabel: "Published",
     readArticle: "Read article",
     backToBlog: "← Back to main blog page",
@@ -156,8 +160,10 @@ const enUiText: UiText = {
     pageTitle: "Projects",
     pageDescription:
       "Real project write-ups. Each article opens up about the technical details, architecture notes, shipped features, and code snippet examples.",
+    badgeLabel: "Project",
     openProjectDetail: "Open project detail",
     backToProjects: "← Back to projects",
+    publicReferenceLabel: "Public project reference",
     intentTitle: "Project Intent",
     architectureTitle: "Architecture Snapshot",
     shippedTitle: "Shipped Feature Set",

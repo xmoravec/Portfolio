@@ -27,16 +27,16 @@ export default function Home() {
         </p>
         <div className="flex flex-wrap gap-3 sm:gap-4">
           <Link
-            href="/blog"
+            href={content.hero.primaryCta.href}
             className="button-primary w-full justify-center sm:w-auto"
           >
-            Read Blog
+            {content.hero.primaryCta.label}
           </Link>
           <Link
-            href="/contact"
+            href={content.hero.secondaryCta.href}
             className="button-secondary w-full justify-center sm:w-auto"
           >
-            Contact me
+            {content.hero.secondaryCta.label}
           </Link>
         </div>
       </section>
@@ -48,7 +48,7 @@ export default function Home() {
           </h2>
           <p className="muted-text text-base text-zinc-700">{ui.about.introFirst}</p>
           <Link href="/about" className="text-sm font-medium text-zinc-900 underline">
-            Read full about section
+            {ui.home.readFullAbout}
           </Link>
         </section>
 
@@ -57,8 +57,8 @@ export default function Home() {
             {content.now.title}
           </h2>
           <p className="muted-text text-base text-zinc-700">{ui.about.nowFirst}</p>
-          <Link href="/about#now" className="text-sm font-medium text-zinc-900 underline">
-            Read full now section
+          <Link href={content.now.cta.href} className="text-sm font-medium text-zinc-900 underline">
+            {ui.home.readFullNow}
           </Link>
         </section>
       </div>
@@ -82,13 +82,21 @@ export default function Home() {
             <p className="text-sm text-zinc-500">{ui.home.featuredSubtitle}</p>
           </div>
           <div className="grid gap-4 xl:grid-cols-2">
-            {featuredProject ? <ProjectPostCard project={featuredProject} compact openProjectDetailLabel={ui.projects.openProjectDetail} /> : null}
+            {featuredProject ? (
+              <ProjectPostCard
+                project={featuredProject}
+                compact
+                openProjectDetailLabel={ui.projects.openProjectDetail}
+                badgeLabel={ui.projects.badgeLabel}
+              />
+            ) : null}
             {featuredBlogPost ? (
               <BlogPostCard
                 post={featuredBlogPost}
                 compact
                 readArticleLabel={ui.blog.readArticle}
                 publishedLabel={ui.blog.publishedLabel}
+                badgeLabel={ui.blog.badgeLabel}
               />
             ) : null}
           </div>

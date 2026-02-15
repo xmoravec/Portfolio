@@ -18,6 +18,7 @@ type BlogPostCardProps = {
   compact?: boolean;
   readArticleLabel?: string;
   publishedLabel?: string;
+  badgeLabel?: string;
 };
 
 function getPreviewCode(post: BlogPost) {
@@ -38,13 +39,14 @@ export function BlogPostCard({
   compact = false,
   readArticleLabel = "Read article",
   publishedLabel = "Published",
+  badgeLabel = "Blog",
 }: BlogPostCardProps) {
   return (
     <article className="section-card space-y-4">
       <div className="space-y-2">
         <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
           <BookOpen className="h-3.5 w-3.5" aria-hidden />
-          Blog
+          {badgeLabel}
         </span>
         <p className="text-xs text-zinc-500">
           {publishedLabel} {formatDate(post.date)} · {post.readTime}

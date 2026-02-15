@@ -95,6 +95,7 @@ function getFeedback(
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const ui = getUiText(defaultLocale);
   const { status, code } = await searchParams;
+  const formStartedAt = String(Date.now());
   const feedback = getFeedback(ui.contact.feedback, status, code);
   const contactChannelLabels: Record<(typeof contactWayValues)[number]["key"], string> = {
     email: ui.contact.channels.email,
@@ -123,7 +124,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           <p className="muted-text text-base">{ui.contact.formDescription}</p>
           {feedback ? <p className={feedback.className}>{feedback.text}</p> : null}
           <form className="space-y-3" action={submitContactForm}>
-            <input type="hidden" name="formStartedAt" value="" />
+            <input type="hidden" name="formStartedAt" value={formStartedAt} readOnly />
             <div className="hidden" aria-hidden>
               <label htmlFor="company">{ui.contact.fields.honeypot}</label>
               <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
