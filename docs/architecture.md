@@ -22,6 +22,7 @@ This document is the technical source of truth for this portfolio codebase. Keep
 - **Fonts**: `next/font` with Geist + Geist Mono
 - **Image optimization**: `next/image`
 - **Image delivery tuning**: AVIF/WebP output enabled in Next config, plus responsive sizing/quality strategy on gallery images
+- **Monitoring**: `@vercel/analytics` mounted globally in `layout.tsx`
 
 No database and no CMS are used currently. Content is authored in TypeScript source files and bundled at build-time.
 
@@ -33,6 +34,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - Global shell (navigation + metadata)
   - `metadataBase` derived from `NEXT_PUBLIC_SITE_URL` fallback to localhost
   - Locale-aware UI labels injected into shared navigation
+  - Global Vercel Analytics client mounted once for route-level pageview tracking
 - `src/app/page.tsx`
   - Home page, fed by structured content model
 - `src/app/about/page.tsx`
@@ -80,7 +82,12 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - Project content source:
   - `src/content/projects/types.ts` for schema
   - `src/content/projects/index.ts` for index and lookup
-  - `src/content/projects/acquamarea-project.ts` and `src/content/projects/portfolio-project.ts` for current project entries
+  - `src/content/projects/acquamarea-project.ts`, `src/content/projects/portfolio-project.ts`, and `src/content/projects/university-engineering-labs-project.ts` for current project entries
+
+- Blog content source includes:
+  - `src/content/blog/posts/initial-development-log.ts`
+  - `src/content/blog/posts/milestone-update-2026-02-15.ts`
+  - `src/content/blog/posts/university-projects-reflection-2026-02-15.ts`
 
 The blog rendering model is block-based typed content (`heading`, `paragraph`, `quote`, `list`, `code`) rendered directly by route component logic. Projects use slug-based routing too, but the detail page is DOM-first and can mix richer layouts and custom UI sections without being constrained to a text block schema.
 
@@ -201,6 +208,7 @@ Contact sender/recipient are currently defined in `src/app/contact/config.ts`.
 - Intended deployment target: Vercel
 - Pages are mostly static/server-rendered by Next runtime as needed
 - Contact form server action runs in serverless environment
+- Vercel Analytics is enabled through the globally mounted `Analytics` component in `layout.tsx`
 - Production readiness depends on setting required env vars in Vercel project settings
 
 ## 9) Current State Summary
@@ -220,6 +228,7 @@ Contact sender/recipient are currently defined in `src/app/contact/config.ts`.
 - Subtle motion layer with reduced-motion support
 - Mobile drawer navigation and full-width mobile shell behavior are implemented
 - UI-facing strings are centralized in locale dictionaries to support bilingual rollout
+- Vercel Analytics integration is active for deployed traffic monitoring
 
 ### In Progress / Planned
 
