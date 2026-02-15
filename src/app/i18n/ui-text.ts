@@ -36,6 +36,16 @@ export type UiText = {
     nowTitle: string;
     nowFirst: string;
     nowSecond: string;
+    experienceTitle: string;
+    experienceDescription: string;
+    experienceItems: Array<{
+      role: string;
+      company: string;
+      period: string;
+      location: string;
+      mode: string;
+      summary: string;
+    }>;
   };
   blog: {
     pageTitle: string;
@@ -143,6 +153,56 @@ const enUiText: UiText = {
       "I am actively working as a contractor and freelancer. I cooperate with companies like InfoBeans and DHL IT Services on complex software design and delivery. I also work with civilian and business clients to develop personalized web and software solutions.",
     nowSecond:
       "In my free time, I am pushing this site from mid-stage into a near-finished baseline with stronger layout decisions, tighter writing, and better interaction polish. In parallel, I am documenting project work in the blog and planning my next trip.",
+    experienceTitle: "Experience Timeline",
+    experienceDescription:
+      "A simplified, chronological overview of roles that shaped my software engineering approach.",
+    experienceItems: [
+      {
+        role: "Senior Software Engineer",
+        company: "InfoBeans",
+        period: "Sep 2025 — Present",
+        location: "Prague, Czechia",
+        mode: "Hybrid",
+        summary:
+          "Advanced software development, analysis, and delivery. Working primarily as an external contractor for DHL IT Services.",
+      },
+      {
+        role: "Software Engineer",
+        company: "InfoBeans",
+        period: "Sep 2024 — Sep 2025",
+        location: "Prague, Czechia",
+        mode: "Hybrid",
+        summary:
+          "Focused on software infrastructure and implementation quality across delivery-oriented projects.",
+      },
+      {
+        role: "ServiceNow Consultant",
+        company: "InfoBeans",
+        period: "Oct 2021 — Jan 2025",
+        location: "Prague, Czechia",
+        mode: "Hybrid",
+        summary:
+          "External contractor role for DHL IT Services, covering platform consulting and software engineering support.",
+      },
+      {
+        role: "Programming Seminar Tutor",
+        company: "Masaryk University Brno",
+        period: "Feb 2019 — Jun 2023",
+        location: "Brno, Czech Republic",
+        mode: "On-site",
+        summary:
+          "Taught computer science students fundamentals of programming with Python and low-level programming in C.",
+      },
+      {
+        role: "Testing Specialist",
+        company: "Sygic",
+        period: "Sep 2019 — Sep 2020",
+        location: "Brno, Czech Republic",
+        mode: "On-site",
+        summary:
+          "QA and development collaboration on a globally used product.",
+      },
+    ],
   },
   blog: {
     pageTitle: "Blog",
