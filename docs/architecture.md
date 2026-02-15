@@ -98,6 +98,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 ### 4.2 Metadata
 
 - Global metadata configured in `layout.tsx`
+- Global viewport metadata is explicitly configured in `layout.tsx` (`width=device-width`, `initialScale=1`, `viewportFit=cover`) to avoid real-device mobile viewport mismatch/phantom horizontal canvas behavior
 - Post-level metadata generated in `blog/[slug]/page.tsx`
   - `title`
   - `description`
@@ -135,6 +136,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 - Photo gallery is a horizontal snap rail with modal enlargement on click
 - Gallery image delivery is tuned for Lighthouse performance: only first thumbnail is eager/high-priority, other thumbnails are lazy-loaded, and thumbnail/modal quality is explicitly controlled
 - Photo gallery cards and CTAs were adjusted for stronger mobile fit (wider cards, mobile-friendly button width behavior)
+- Horizontal overflow hardening is applied at the shell level (`html/body` + `.page-shell`) and on reusable card surfaces (`min-w-0`) to prevent long-content/grid overflow from expanding document width on mobile
+- Drawer and gallery widths use bounded `min()` viewport values to avoid viewport-width overshoot edge-cases on real devices
 
 ### 5.3 Motion System
 

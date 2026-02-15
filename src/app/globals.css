@@ -20,13 +20,21 @@ body {
   scroll-behavior: smooth;
 }
 
+html,
+body {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 @layer components {
   .page-shell {
-    @apply mx-auto flex min-h-screen w-full max-w-none flex-col gap-10 px-4 py-8 sm:gap-14 sm:px-6 sm:py-12 lg:max-w-6xl lg:px-10 xl:max-w-7xl;
+    @apply mx-auto flex min-h-screen w-full max-w-none flex-col gap-10 overflow-x-hidden px-4 py-8 sm:gap-14 sm:px-6 sm:py-12 lg:max-w-6xl lg:px-10 xl:max-w-7xl;
   }
 
   .section-card {
-    @apply rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg sm:p-6 lg:p-7;
+    @apply min-w-0 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg sm:p-6 lg:p-7;
   }
 
   .section-title {
@@ -50,7 +58,7 @@ body {
   }
 
   .horizontal-scroll {
-    @apply -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 [touch-action:pan-x];
+    @apply flex max-w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [touch-action:pan-x];
   }
 
   .horizontal-scroll::-webkit-scrollbar {

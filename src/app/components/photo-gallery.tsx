@@ -46,7 +46,7 @@ export function PhotoGallery({ items, labels }: PhotoGalleryProps) {
             key={photo.src}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className="section-card group w-[88vw] max-w-none shrink-0 snap-start overflow-hidden p-0 text-left md:w-[52vw] md:max-w-120 lg:w-[34vw]"
+            className="section-card group w-[min(88vw,30rem)] shrink-0 snap-start overflow-hidden p-0 text-left md:w-[52vw] md:max-w-120 lg:w-[34vw]"
             aria-label={`${labels.openPhotoDetailsPrefix} ${photo.title}`}
           >
             <div className="relative aspect-4/3 w-full bg-zinc-100 md:aspect-5/4">

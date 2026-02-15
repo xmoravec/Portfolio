@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { defaultLocale } from "./content";
@@ -19,9 +19,15 @@ const geistMono = Geist_Mono({
 const ui = getUiText(defaultLocale);
 
 export const metadata: Metadata = {
-  title: "Erik Moravec",
+  title: "XMoravec",
   description: ui.metadata.description,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -37,7 +43,7 @@ export default function RootLayout({
         <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95">
           <div className="mx-auto flex w-full max-w-none items-center justify-between px-4 py-3 sm:px-6 lg:max-w-7xl lg:px-10">
             <Link href="/" className="text-sm font-semibold tracking-wide text-zinc-900">
-              Erik Moravec
+              XMoravec
             </Link>
             <SiteNav labels={ui.nav} />
           </div>

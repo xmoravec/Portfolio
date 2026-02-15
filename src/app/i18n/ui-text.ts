@@ -119,7 +119,7 @@ const enUiText: UiText = {
     blog: "Blog",
     about: "About",
     contact: "Contact",
-    menu: "Menu",
+    menu: "XMoravec",
     openMenuAria: "Open navigation menu",
     closeMenuAria: "Close navigation menu",
     mobileNavAria: "Mobile navigation",
