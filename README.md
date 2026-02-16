@@ -56,6 +56,8 @@ This codebase is in the "polish and production wiring" phase: core routes are im
 
 - `NEXT_PUBLIC_SITE_URL` — canonical metadata base URL
 - `RESEND_API_KEY` — Resend authentication key
+- `CONTACT_FROM_EMAIL` — sender shown in outgoing contact emails (e.g. `XMoravec Contact <contact@xmoravec.com>`)
+- `CONTACT_TO_EMAIL` — destination inbox for website contact submissions
 
 Contact sender and recipient values are currently configured in `src/app/contact/config.ts`.
 

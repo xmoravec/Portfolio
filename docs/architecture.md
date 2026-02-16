@@ -194,8 +194,11 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 - Resend API is called via `fetch` to `https://api.resend.com/emails`
 - Env vars:
   - `RESEND_API_KEY`
+- Optional mail routing vars:
+  - `CONTACT_FROM_EMAIL`
+  - `CONTACT_TO_EMAIL`
 - Local config:
-  - `src/app/contact/config.ts` stores sender and recipient values
+  - `src/app/contact/config.ts` resolves sender/recipient from env with safe defaults
 - Graceful behavior when `RESEND_API_KEY` is missing:
   - form validates
   - response shows `queued` status instead of crashing
