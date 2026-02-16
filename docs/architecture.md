@@ -1,6 +1,6 @@
 # Portfolio Architecture
 
-Last updated: 2026-02-15
+Last updated: 2026-02-16
 
 This document is the technical source of truth for this portfolio codebase. Keep it updated whenever architecture, routing, content flow, integrations, or deployment assumptions change.
 
@@ -33,7 +33,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
 - `src/app/layout.tsx`
   - Global shell (navigation + metadata)
   - `metadataBase` derived from `NEXT_PUBLIC_SITE_URL` fallback to localhost
-  - Locale-aware UI labels injected into shared navigation
+  - Root layout remains static; navigation locale labels are resolved client-side from locale cookie
   - Global Vercel Analytics client mounted once for route-level pageview tracking
 - `src/app/page.tsx`
   - Home page, fed by structured content model
@@ -52,6 +52,7 @@ No database and no CMS are used currently. Content is authored in TypeScript sou
   - Contact UI with form submission feedback
 - `src/app/contact/actions.ts`
   - Server action for validation, anti-spam, and optional email delivery via Resend
+  - In-memory rate limiting by client IP fingerprint to reduce contact endpoint abuse
 - `src/app/components/site-nav.tsx`
   - Path-aware navigation with conditional Home link on non-home routes
   - Mobile hamburger drawer with overlay, close actions, and locale-driven labels
@@ -105,6 +106,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 ### 4.2 Metadata
 
 - Global metadata configured in `layout.tsx`
+- `metadataBase` is resolved through a guarded site-URL utility to avoid malformed env input breaking canonical generation
 - Global viewport metadata is explicitly configured in `layout.tsx` (`width=device-width`, `initialScale=1`, `viewportFit=cover`) to avoid real-device mobile viewport mismatch/phantom horizontal canvas behavior
 - Post-level metadata generated in `blog/[slug]/page.tsx`
   - `title`
@@ -113,6 +115,9 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
   - Open Graph article metadata
 - Project-level metadata generated in `projects/[slug]/page.tsx`
   - Same canonical + Open Graph approach for project detail pages
+- SEO infrastructure routes are implemented:
+  - `src/app/robots.ts`
+  - `src/app/sitemap.ts`
 
 ## 5) Styling System
 
@@ -142,6 +147,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 - Mobile navigation uses a right-side drawer with backdrop to preserve readability on small screens
 - Photo gallery is a horizontal snap rail with modal enlargement on click
 - Gallery image delivery is tuned for Lighthouse performance: only first thumbnail is eager/high-priority, other thumbnails are lazy-loaded, and thumbnail/modal quality is explicitly controlled
+- Global security response headers are configured in `next.config.ts` for baseline hardening (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`)
 - Photo gallery cards and CTAs were adjusted for stronger mobile fit (wider cards, mobile-friendly button width behavior)
 - Horizontal overflow hardening is applied at the shell level (`html/body` + `.page-shell`) and on reusable card surfaces (`min-w-0`) to prevent long-content/grid overflow from expanding document width on mobile
 - Drawer and gallery widths use bounded `min()` viewport values to avoid viewport-width overshoot edge-cases on real devices
@@ -160,7 +166,7 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
 
 - File: `src/app/contact/page.tsx`
 - Dominant full-width form card with status messaging
-- Hidden timestamp field (`formStartedAt`) is stamped at render time for anti-spam timing checks
+- Hidden timestamp field (`formStartedAt`) is stamped on client form mount for anti-spam timing checks
 - Social/contact cards placed below the form
 - Contact channels include:
   - Email (`trane128@gmail.com`)
@@ -180,6 +186,8 @@ The blog rendering model is block-based typed content (`heading`, `paragraph`, `
     - timing check (`formStartedAt` too fast submit)
     - suspicious short-link message pattern
 - No server-side request logging is emitted from this action
+- Anti-spam timing checks reject missing/invalid form start timestamps and too-fast submissions
+- Rate limiting blocks burst submissions from the same client fingerprint inside a rolling window
 
 ### 6.3 Delivery Integration (Resend)
 

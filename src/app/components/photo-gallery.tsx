@@ -55,7 +55,7 @@ export function PhotoGallery({ items, labels }: PhotoGalleryProps) {
                 alt={photo.alt}
                 fill
                 className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                sizes="(max-width: 768px) 84vw, (max-width: 1024px) 52vw, 34vw"
+                sizes="(max-width: 545px) 88vw, (max-width: 923px) 52vw, (max-width: 1023px) 480px, (max-width: 1411px) 34vw, 480px"
                 quality={60}
                 priority={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}

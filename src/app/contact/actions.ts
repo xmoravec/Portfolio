@@ -1,7 +1,9 @@
 "use server";
 
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { contactMailConfig } from "./config";
+import { isContactSubmissionRateLimited } from "./rate-limit";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const URL_PATTERN = /(https?:\/\/|www\.)/i;
@@ -20,6 +22,15 @@ function toSafeText(value: FormDataEntryValue | null) {
     return "";
   }
   return value.trim();
+}
+
+function getClientIdentifier(headerStore: Headers) {
+  const forwardedFor = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const realIp = headerStore.get("x-real-ip")?.trim();
+  const cloudflareIp = headerStore.get("cf-connecting-ip")?.trim();
+  const fallback = "unknown-client";
+
+  return forwardedFor || realIp || cloudflareIp || fallback;
 }
 
 async function sendWithResend(options: {
@@ -107,16 +118,24 @@ async function sendWithResend(options: {
 }
 
 export async function submitContactForm(formData: FormData) {
+  const headerStore = await headers();
+  const clientIdentifier = getClientIdentifier(headerStore);
+
+  if (isContactSubmissionRateLimited(clientIdentifier)) {
+    redirect("/contact?status=error&code=spam");
+  }
+
   const name = toSafeText(formData.get("name"));
   const email = toSafeText(formData.get("email")).toLowerCase();
   const message = toSafeText(formData.get("message"));
   const company = toSafeText(formData.get("company"));
   const formStartedAt = Number.parseInt(toSafeText(formData.get("formStartedAt")), 10);
 
-  const isTooFast = Number.isFinite(formStartedAt) && formStartedAt > 0 && Date.now() - formStartedAt < 1500;
+  const missingOrInvalidStartedAt = !Number.isFinite(formStartedAt) || formStartedAt <= 0;
+  const isTooFast = !missingOrInvalidStartedAt && Date.now() - formStartedAt < 1500;
   const hasSuspiciousLink = URL_PATTERN.test(message) && message.length < 40;
 
-  if (company || isTooFast || hasSuspiciousLink) {
+  if (company || missingOrInvalidStartedAt || isTooFast || hasSuspiciousLink) {
     redirect("/contact?status=error&code=spam");
   }
 

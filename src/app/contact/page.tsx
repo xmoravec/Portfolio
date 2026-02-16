@@ -1,4 +1,5 @@
 import { submitContactForm } from "./actions";
+import { FormStartedAtField } from "./form-started-at-field";
 import { getUiText } from "../i18n";
 import { getRequestLocale } from "../i18n/locale.server";
 import { Facebook, Github, Linkedin, Mail } from "lucide-react";
@@ -124,7 +125,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           <p className="muted-text text-base">{ui.contact.formDescription}</p>
           {feedback ? <p className={feedback.className}>{feedback.text}</p> : null}
           <form className="space-y-3" action={submitContactForm}>
-            <input type="hidden" name="formStartedAt" value="" readOnly />
+            <FormStartedAtField />
             <div className="hidden" aria-hidden>
               <label htmlFor="company">{ui.contact.fields.honeypot}</label>
               <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />

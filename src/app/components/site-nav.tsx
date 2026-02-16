@@ -4,33 +4,31 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import type { Locale } from "../content";
-import { localeCookieName } from "../i18n/locale.shared";
+import { defaultLocale, type Locale } from "../content";
+import { getUiText } from "../i18n";
+import { localeCookieName, resolveLocale } from "../i18n/locale.shared";
 
-type SiteNavProps = {
-  currentLocale: Locale;
-  labels: {
-    primaryAria: string;
-    home: string;
-    projects: string;
-    blog: string;
-    about: string;
-    contact: string;
-    menu: string;
-    openMenuAria: string;
-    closeMenuAria: string;
-    mobileNavAria: string;
-    localeSwitcherAria: string;
-    localeEnLabel: string;
-    localeSkLabel: string;
-  };
-};
+function readLocaleFromCookie() {
+  if (typeof document === "undefined") {
+    return defaultLocale;
+  }
 
-export function SiteNav({ labels, currentLocale }: SiteNavProps) {
+  const cookieValue = document.cookie
+    .split(";")
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(`${localeCookieName}=`))
+    ?.split("=")[1];
+
+  return resolveLocale(cookieValue ? decodeURIComponent(cookieValue) : undefined);
+}
+
+export function SiteNav() {
   const pathname = usePathname();
   const router = useRouter();
   const showHome = pathname !== "/";
+  const [currentLocale, setCurrentLocale] = useState<Locale>(() => readLocaleFromCookie());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const labels = getUiText(currentLocale).nav;
 
   function updateLocale(nextLocale: Locale) {
     if (nextLocale === currentLocale) {
@@ -38,6 +36,7 @@ export function SiteNav({ labels, currentLocale }: SiteNavProps) {
     }
 
     document.cookie = `${localeCookieName}=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+    setCurrentLocale(nextLocale);
     router.refresh();
   }
 
